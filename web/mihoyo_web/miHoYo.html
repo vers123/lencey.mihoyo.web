@@ -8,8 +8,11 @@
 <meta name="author" content="Vers123">
 <title>miHoYo Game Navigation</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<style type="text/tailwindcss">
+<!-- Replaced Font Awesome with inline SVG icons to remove external dependency -->
+<!-- Performance hints: preconnect for common CDNs -->
+<link rel="preconnect" href="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<style>
     @layer utilities
     {
         .content-auto
@@ -20,6 +23,15 @@
         {
             transition: all 0.3s ease-in-out;
         }
+    }
+
+    /* small icon base - uses currentColor and scales with font-size */
+    .icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        fill: currentColor;
+        display: inline-block;
     }
 </style>
 <script>
@@ -228,6 +240,13 @@
             padding: 1rem;
         }
     }
+
+    /* Global image styles */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
 </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col transition-colors duration-300">
@@ -237,20 +256,25 @@
         <div class="container mx-auto px-4 py-4">
             <div class="flex flex-col md:flex-row items-center justify-between header-content">
                 <h1 class="text-xl md:text-3xl font-bold flex items-center header-title mb-2 md:mb-0">
-                    <i class="fa fa-gamepad mr-3"></i>
+                    <!-- gamepad icon -->
+                    <svg class="icon mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path></svg>
                     <span class="lang-zh">miHoYo 游戏导航</span>
                     <span class="lang-en">miHoYo Website Navigation</span>
                 </h1>
                 <div class="flex items-center gap-4">
                     <div class="search-box">
-                        <input type="text" id="searchInput" class="search-input" placeholder="搜索游戏...">
-                        <i class="fa fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="search-input" placeholder="搜索游戏..." aria-label="搜索游戏 / Search games">
+                        <!-- search icon -->
+                        <svg class="icon search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
                     </div>
                     <button id="themeToggle" class="p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换主题">
-                        <i class="fa fa-moon-o text-xl"></i>
+                        <!-- moon (default) and sun (hidden by default) -->
+                        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <svg class="icon icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path></svg>
                     </button>
                     <button id="langToggle" class="lang-toggle-btn p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换语言">
-                        <i class="fa fa-language text-xl"></i>
+                        <!-- globe icon -->
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path></svg>
                     </button>
                 </div>
             </div>
@@ -262,10 +286,12 @@
         <!-- 汉堡按钮容器 -->
         <div id="hamburgerContainer" class="bg-dark text-white p-4 shadow-md">
             <button id="menuToggle" class="text-white focus:outline-none">
-                <i class="fa fa-bars text-xl"></i>
+                <!-- bars icon -->
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
             </button>
             <a href="../../index.html" class="flex items-center text-white hover:opacity-90 transition-smooth">
-                <i class="fa fa-reply" aria-hidden="true"></i>
+                <!-- reply/back icon -->
+                <svg class="icon mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"></path></svg>
                 <span class="lang-zh">主页</span>
                 <span class="lang-en">Home</span>
             </a>
@@ -279,22 +305,26 @@
             <!-- 导航菜单列表 -->
             <nav class="space-y-1">
                 <button onclick="showContent('home')" class="menu-btn w-full text-left px-4 py-3 rounded hover:bg-primary transition-smooth flex items-center">
-                    <i class="fa fa-home w-6"></i>
+                    <!-- home icon -->
+                    <svg class="icon w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z"></path></svg>
                     <span class="lang-zh">首页</span>
                     <span class="lang-en">Home</span>
                 </button>
                 <button onclick="showContent('miyoushe')" class="menu-btn w-full text-left px-4 py-3 rounded hover:bg-primary transition-smooth flex items-center">
-                    <i class="fa fa-users w-6"></i>
+                    <!-- users icon -->
+                    <svg class="icon w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zM8 13c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zM16 13c-.29 0-.62.02-.97.05 1.16.84 1.97 2.07 1.97 3.45V19h6v-2.5C23 14.17 18.33 13 16 13z"></path></svg>
                     <span class="lang-zh">米游社</span>
                     <span class="lang-en">MiHoYo Community</span>
                 </button>
                 <button onclick="showContent('mihoyo-games')" class="menu-btn w-full text-left px-4 py-3 rounded hover:bg-primary transition-smooth flex items-center">
-                    <i class="fa fa-gamepad w-6"></i>
+                    <!-- gamepad icon -->
+                    <svg class="icon w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path></svg>
                     <span class="lang-zh">米哈游游戏</span>
                     <span class="lang-en">MiHoYo Games</span>
                 </button>
                 <button onclick="showContent('favorites')" class="menu-btn w-full text-left px-4 py-3 rounded hover:bg-primary transition-smooth flex items-center">
-                    <i class="fa fa-heart w-6"></i>
+                    <!-- heart icon -->
+                    <svg class="icon w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z"></path></svg>
                     <span class="lang-zh">我的收藏</span>
                     <span class="lang-en">My Favorites</span>
                 </button>
@@ -323,7 +353,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 text-center hover:shadow-lg transition-smooth">
-                        <i class="fa fa-users text-4xl md:text-5xl text-primary mb-4"></i>
+                        <!-- users big icon -->
+                        <svg class="icon text-4xl md:text-5xl text-primary mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zM8 13c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zM16 13c-.29 0-.62.02-.97.05 1.16.84 1.97 2.07 1.97 3.45V19h6v-2.5C23 14.17 18.33 13 16 13z"></path></svg>
                         <h3 class="text-lg md:text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                             <span class="lang-zh">玩家社区</span>
                             <span class="lang-en">Player Community</span>
@@ -339,7 +370,8 @@
                     </div>
 
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 text-center hover:shadow-lg transition-smooth">
-                        <i class="fa fa-gamepad text-4xl md:text-5xl text-primary mb-4"></i>
+                        <!-- gamepad big icon -->
+                        <svg class="icon text-4xl md:text-5xl text-primary mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path></svg>
                         <h3 class="text-lg md:text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                             <span class="lang-zh">精彩游戏</span>
                             <span class="lang-en">Exciting Games</span>
@@ -361,7 +393,8 @@
             <div id="miyoushe" class="content-section hidden">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6">
                     <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                        <i class="fa fa-users mr-2 text-primary"></i>
+                        <!-- small users icon -->
+                        <svg class="icon mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zM8 13c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zM16 13c-.29 0-.62.02-.97.05 1.16.84 1.97 2.07 1.97 3.45V19h6v-2.5C23 14.17 18.33 13 16 13z"></path></svg>
                         <span class="lang-zh">米游社</span>
                         <span class="lang-en">MiHoYo Community</span>
                     </h2>
@@ -375,10 +408,11 @@
                     <!-- 米游社官网 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="米游社" data-url="https://www.miyoushe.com/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '米游社', 'https://www.miyoushe.com/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://www.miyoushe.com/" target="_blank" title="米游社官网">
-                            <img src="mihoyo/images/logo/mys-logo-v2.png" alt="米游社" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/logo/mys_logo_v2.png" alt="米游社" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">米游社官网</span>
@@ -395,10 +429,11 @@
                     <!-- 崩坏：星穹铁道社区 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏：星穹铁道社区" data-url="https://www.miyoushe.com/sr/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏：星穹铁道社区', 'https://www.miyoushe.com/sr/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://www.miyoushe.com/sr/" target="_blank" title="崩坏：星穹铁道社区">
-                            <img src="mihoyo/images/game_logo/Honkai Star Rail.jpg" alt="崩坏：星穹铁道社区" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/honkai_star_rail.jpg" alt="崩坏：星穹铁道社区" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏：星穹铁道社区</span>
@@ -415,12 +450,13 @@
                     <!-- 原神社区 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="原神社区" data-url="https://www.miyoushe.com/ys/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '原神社区', 'https://www.miyoushe.com/ys/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://www.miyoushe.com/ys/" target="_blank" title="原神社区">
-                            <img src="mihoyo/images/game_logo/genshin_impact.jpg" alt="原神社区" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/genshin_impact.jpg" alt="原神社区" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
-                                <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
+                                <h3 class="text-lg md:text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">原神社区</span>
                                     <span class="lang-en">Genshin Impact Community</span>
                                 </h3>
@@ -435,12 +471,13 @@
                     <!-- 绝区零社区 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="绝区零社区" data-url="https://www.miyoushe.com/zzz/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '绝区零社区', 'https://www.miyoushe.com/zzz/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://www.miyoushe.com/zzz/" target="_blank" title="绝区零社区">
-                            <img src="mihoyo/images/game_logo/zenless_zone_zero.jpg" alt="绝区零社区" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/zenless_zone_zero.jpg" alt="绝区零社区" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
-                                <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
+                                <h3 class="text-lg md:text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">绝区零社区</span>
                                     <span class="lang-en">Zenless Zone Zero Community</span>
                                 </h3>
@@ -463,7 +500,7 @@
                         <span class="lang-en">MiHoYo Games Official Websites</span>
                     </h2>
                     <a href="https://mihoyo.com" target="_blank" title="miHoYo官网" class="inline-block mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-smooth">
-                        <img src="mihoyo/images/logo/mihoyo.png" alt="miHoYo 官网" class="h-16 md:h-20 lg:h-24 w-auto object-cover bg-black p-2">
+                        <img src="mihoyo/images/logo/mihoyo.png" alt="miHoYo 官网" class="h-16 md:h-20 lg:h-24 w-auto object-contain bg-black p-2">
                     </a>
                 </div>
 
@@ -471,10 +508,11 @@
                     <!-- 原神 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="原神" data-url="https://ys.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '原神', 'https://ys.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://ys.mihoyo.com/main" target="_blank" title="原神官网">
-                            <img src="mihoyo/images/game_logo/genshin_impact.jpg" alt="原神" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/genshin_impact.jpg" alt="原神" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">原神官网</span>
@@ -491,10 +529,11 @@
                     <!-- 崩坏：星穹铁道 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏：星穹铁道" data-url="https://sr.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏：星穹铁道', 'https://sr.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://sr.mihoyo.com/main" target="_blank" title="崩坏：星穹铁道官网">
-                            <img src="mihoyo/images/game_logo/Honkai Star Rail.jpg" alt="崩坏：星穹铁道" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/honkai_star_rail.jpg" alt="崩坏：星穹铁道" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏：星穹铁道官网</span>
@@ -511,10 +550,11 @@
                     <!-- 绝区零 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="绝区零" data-url="https://zzz.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '绝区零', 'https://zzz.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://zzz.mihoyo.com/main" target="_blank" title="绝区零官网">
-                            <img src="mihoyo/images/game_logo/zenless_zone_zero.jpg" alt="绝区零" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/zenless_zone_zero.jpg" alt="绝区零" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">绝区零官网</span>
@@ -531,10 +571,11 @@
                     <!-- 星布谷地 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="星布谷地" data-url="https://planet.mihoyo.com/home">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '星布谷地', 'https://planet.mihoyo.com/home')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://planet.mihoyo.com/home" target="_blank" title="星布谷地官网">
-                            <img src="mihoyo/images/game_logo/petit_planet.jpg" alt="星布谷地" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/petit_planet.jpg" alt="星布谷地" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">星布谷地官网</span>
@@ -551,10 +592,11 @@
                     <!-- 崩坏：因缘精灵 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏：因缘精灵" data-url="https://yyjl.mihoyo.com/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏：因缘精灵', 'https://yyjl.mihoyo.com/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://yyjl.mihoyo.com/" target="_blank" title="崩坏：因缘精灵官网">
-                            <img src="mihoyo/images/game_logo/honkai_nexus_anima.jpg" alt="崩坏：因缘精灵" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/honkai_nexus_anima.jpg" alt="崩坏：因缘精灵" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏：因缘精灵官网</span>
@@ -571,10 +613,11 @@
                     <!-- 崩坏3 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏3" data-url="https://bh3.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏3', 'https://bh3.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://bh3.mihoyo.com/main" target="_blank" title="崩坏3官网">
-                            <img src="mihoyo/images/game_logo/honkai_impact_3.jpg" alt="崩坏3" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/honkai_impact_3.jpg" alt="崩坏3" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏3官网</span>
@@ -591,10 +634,11 @@
                     <!-- 未定事件簿 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="未定事件簿" data-url="https://wd.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '未定事件簿', 'https://wd.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://wd.mihoyo.com/main" target="_blank" title="未定事件簿官网">
-                            <img src="mihoyo/images/game_logo/tears_of_themis.jpg" alt="未定事件簿" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/tears_of_themis.jpg" alt="未定事件簿" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">未定事件簿官网</span>
@@ -611,10 +655,11 @@
                     <!-- 崩坏学园2 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏学园2" data-url="https://www.benghuai.com/index/">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏学园2', 'https://www.benghuai.com/index/')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://www.benghuai.com/index/" target="_blank" title="崩坏学园2官网">
-                            <img src="mihoyo/images/game_logo/bh2-logo-v2.jpg" alt="崩坏学园2" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/bh2_logo_v2.jpg" alt="崩坏学园2" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏学园2官网</span>
@@ -631,10 +676,11 @@
                     <!-- 崩坏：星穹铁道 -->
                     <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="崩坏：星穹铁道" data-url="https://sr.mihoyo.com/main">
                         <button class="favorite-btn" onclick="toggleFavorite(this, '崩坏：星穹铁道', 'https://sr.mihoyo.com/main')">
-                            <i class="fa fa-heart-o"></i>
+                            <!-- heart outline -->
+                            <svg class="icon icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                         </button>
                         <a href="https://sr.mihoyo.com/main" target="_blank" title="崩坏：星穹铁道官网">
-                            <img src="mihoyo/images/game_logo/Honkai Star Rail.jpg" alt="崩坏：星穹铁道" class="h-20 md:h-24 lg:h-32 w-auto object-cover">
+                            <img src="mihoyo/images/game_logo/honkai_star_rail.jpg" alt="崩坏：星穹铁道" class="h-20 md:h-24 lg:h-32 w-auto object-contain">
                             <div class="p-4">
                                 <h3 class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
                                     <span class="lang-zh">崩坏：星穹铁道官网</span>
@@ -727,11 +773,14 @@
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            const icon = document.querySelector('#themeToggle i');
+            const iconMoon = document.querySelector('.icon-moon');
+            const iconSun = document.querySelector('.icon-sun');
             if (isDark) {
-                icon.classList.replace('fa-moon-o', 'fa-sun-o');
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'inline';
             } else {
-                icon.classList.replace('fa-sun-o', 'fa-moon-o');
+                iconMoon.style.display = 'inline';
+                iconSun.style.display = 'none';
             }
         }
 
@@ -783,12 +832,12 @@
                 // 添加收藏
                 favorites.push({ name: gameName, url: gameUrl });
                 button.classList.add('active');
-                button.querySelector('i').classList.replace('fa-heart-o', 'fa-heart');
+                button.querySelector('svg').classList.replace('icon-heart-outline', 'icon-heart');
             } else {
                 // 取消收藏
                 favorites.splice(gameIndex, 1);
                 button.classList.remove('active');
-                button.querySelector('i').classList.replace('fa-heart', 'fa-heart-o');
+                button.querySelector('svg').classList.replace('icon-heart', 'icon-heart-outline');
             }
             
             localStorage.setItem('favoriteGames', JSON.stringify(favorites));
@@ -829,7 +878,8 @@
             favoritesGrid.innerHTML = favorites.map(game => `
                 <div class="game-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-smooth relative" data-game="${game.name}" data-url="${game.url}">
                     <button class="favorite-btn active" onclick="toggleFavorite(this, '${game.name}', '${game.url}')">
-                        <i class="fa fa-heart"></i>
+                        <!-- heart icon -->
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-9-6.36C1.68 12.35 1 10.28 1 8.5 1 5.46 3.46 3 6.5 3c1.74 0 3.41.81 4.5 2.09C12.09 3.81 13.76 3 15.5 3 18.54 3 21 5 21 8.5c0 1.78-.68 3.85-2.01 6.14C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                     </button>
                     <a href="${game.url}" target="_blank" title="${game.name}">
                         <div class="p-4">
@@ -852,6 +902,28 @@
             // 显示指定内容区域
             document.getElementById(contentId).classList.remove('hidden');
         }
+    </script>
+    <script>
+        // 自动化：为所有外部新标签打开的链接添加 rel 安全属性，
+        // 并为无 loading 属性的图片设置 loading="lazy"。此脚本仅在 DOM 加载后运行，不改变页面视觉效果。
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                document.querySelectorAll('a[target="_blank"]').forEach(a => {
+                    if (!a.hasAttribute('rel')) {
+                        a.setAttribute('rel', 'noopener noreferrer');
+                    }
+                });
+
+                document.querySelectorAll('img').forEach(img => {
+                    if (!img.hasAttribute('loading')) {
+                        img.setAttribute('loading', 'lazy');
+                    }
+                });
+            } catch (e) {
+                // 容错：如果浏览器不支持某些 API，保持静默失败以免影响页面。
+                console.error('Init helper script error:', e);
+            }
+        });
     </script>
 </body>
 </html>

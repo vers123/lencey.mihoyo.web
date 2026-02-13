@@ -8,7 +8,9 @@
     <meta name="author" content="Vers123">
     <title>选择访问页面 - Vers123游戏导航</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Using inline SVG icons instead of Font Awesome to reduce external dependencies -->
+    <!-- Performance hints: preconnect for common CDNs (safe, no visual changes) -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -30,7 +32,7 @@
     <script>
         // 页面加载时初始化主题和语言
         document.addEventListener('DOMContentLoaded', () => {
-            const darkModeToggles = document.querySelectorAll('#darkModeToggle');
+            const darkModeToggles = document.querySelectorAll('.dark-mode-toggle');
             const langToggles = document.querySelectorAll('.lang-toggle-btn');
             const htmlElement = document.documentElement;
             
@@ -38,8 +40,12 @@
             const isDark = localStorage.getItem('theme') === 'dark';
             if (isDark) {
                 htmlElement.classList.add('dark');
+                // show sun icon when dark
                 darkModeToggles.forEach(toggle => {
-                    toggle.querySelector('i').classList.replace('fa-moon-o', 'fa-sun-o');
+                    const moon = toggle.querySelector('.icon-moon');
+                    const sun = toggle.querySelector('.icon-sun');
+                    if (moon) moon.style.display = 'none';
+                    if (sun) sun.style.display = 'inline-block';
                 });
             }
             
@@ -63,18 +69,22 @@
         // 切换暗黑模式
         function toggleTheme() {
             const htmlElement = document.documentElement;
-            const darkModeToggles = document.querySelectorAll('#darkModeToggle');
-            
+            const darkModeToggles = document.querySelectorAll('.dark-mode-toggle');
+
             htmlElement.classList.toggle('dark');
             const isDark = htmlElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             
+            // swap visible SVGs (moon <-> sun)
             darkModeToggles.forEach(toggle => {
-                const icon = toggle.querySelector('i');
+                const moon = toggle.querySelector('.icon-moon');
+                const sun = toggle.querySelector('.icon-sun');
                 if (isDark) {
-                    icon.classList.replace('fa-moon-o', 'fa-sun-o');
+                    if (moon) moon.style.display = 'none';
+                    if (sun) sun.style.display = 'inline-block';
                 } else {
-                    icon.classList.replace('fa-sun-o', 'fa-moon-o');
+                    if (moon) moon.style.display = 'inline-block';
+                    if (sun) sun.style.display = 'none';
                 }
             });
         }
@@ -83,7 +93,10 @@
         function toggleLanguage() {
             const zhElements = document.querySelectorAll('.lang-zh');
             const enElements = document.querySelectorAll('.lang-en');
-            
+
+            // Safety guard: if language elements are missing, do nothing
+            if (!zhElements.length || !enElements.length) return;
+
             // 检查当前语言状态（默认中文）
             const isCurrentlyChinese = zhElements[0].style.display !== 'none';
             
@@ -108,7 +121,8 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
+    <style>
+        /* Consolidated styles: utilities, image responsiveness, dark-mode and language visibility */
         @layer utilities {
             .content-auto {
                 content-visibility: auto;
@@ -117,8 +131,26 @@
                 transition: all 0.3s ease-in-out;
             }
         }
-    </style>
-    <style>
+
+        /* 图片自适应：确保卡片和 logo 在各种视口内按容器宽度缩放，且保持纵横比 */
+        .game-card img,
+        .container img,
+        header img,
+        footer img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 小图标基础样式 */
+        .icon {
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
         /* 暗黑模式样式 */
         .dark body {
             background-color: #1A1A2E;
@@ -170,28 +202,29 @@
     <header class="bg-primary text-white shadow-lg">
         <div class="container mx-auto px-4 py-4 flex items-center relative">
             <h1 class="text-2xl md:text-3xl font-bold flex items-center">
-                <i class="fa fa-home mr-3"></i>
+                <!-- home icon -->
+                <svg class="icon mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z"></path></svg>
                 <span class="lang-zh">Vers123网站 导航</span>
                 <span class="lang-en">Vers123 Website Navigation</span>
             </h1>
             <div class="hidden md:block absolute right-4 flex items-center">
-                <button id="darkModeToggle" class="text-white hover:text-gray-200 transition-smooth mr-4" title="切换主题">
-                    <i class="fa fa-moon-o"></i>
+                <button class="dark-mode-toggle text-white hover:text-gray-200 transition-smooth mr-4" title="切换主题">
+                    <!-- two SVGs: moon (shown by default) and sun (shown when dark) -->
+                    <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="icon icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path></svg>
                 </button>
-                <button id="langToggle" class="lang-toggle-btn p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换语言">
-                    <i class="fa fa-language"></i>
+                <button class="lang-toggle-btn p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换语言">
+                    <!-- language/globe icon -->
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path></svg>
                 </button>
-                <span class="text-sm opacity-90 ml-4">
-                    <span class="lang-zh">探索精彩世界!</span>
-                    <span class="lang-en">Explore the wonderful world!</span>
-                </span>
             </div>
             <div class="md:hidden absolute right-4 flex items-center">
-                <button id="darkModeToggle" class="text-white hover:text-gray-200 transition-smooth mr-2" title="切换主题">
-                    <i class="fa fa-moon-o"></i>
+                <button class="dark-mode-toggle text-white hover:text-gray-200 transition-smooth mr-2" title="切换主题">
+                    <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="icon icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path></svg>
                 </button>
-                <button id="langToggle" class="lang-toggle-btn p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换语言">
-                    <i class="fa fa-language"></i>
+                <button class="lang-toggle-btn p-2 rounded-full hover:bg-white/20 transition-smooth" title="切换语言">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path></svg>
                 </button>
             </div>
         </div>
@@ -207,18 +240,19 @@
                 <div class="grid grid-cols-1 gap-4">
 
                     <!-- 跳转到 miHoYo.html -->
-                    <a href="Web/mihoyo_web/miHoYo.html" class="block">
+                    <a href="web/mihoyo_web/miHoYo.html" class="block">
                         <button class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-smooth flex items-center justify-center">
-                            <i class="fa fa-gamepad mr-2"></i>
+                            <!-- gamepad icon -->
+                            <svg class="icon mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path></svg>
                             <span class="lang-zh">访问 miHoYo 导航页</span>
                             <span class="lang-en">Visit miHoYo Navigation Page</span>
                         </button>
                     </a>
 
                     <!-- 跳转到 another_games.html -->
-                    <a href="Web/another_game_web/another_games.html" class="block">
+                    <a href="web/another_game_web/another_games.html" class="block">
                         <button class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-smooth flex items-center justify-center">
-                            <i class="fa fa-gamepad mr-2"></i>
+                            <svg class="icon mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path></svg>
                             <span class="lang-zh">访问其他游戏导航页</span>
                             <span class="lang-en">Visit Other Games Navigation Page</span>
                         </button>
@@ -243,3 +277,4 @@
     </footer>
 </body>
 </html>
+
