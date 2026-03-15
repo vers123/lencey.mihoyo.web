@@ -3,10 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Vers123 游戏导航站 - 汇集米哈游及热门游戏官方链接" name="description">
-    <meta content="游戏导航,米哈游,原神,崩坏3,星穹铁道,Minecraft,CS2" name="keywords">
-    <meta content="Vers123" name="author">
-    <title>Vers123 Game Navigation</title>
+    <meta content="页面未找到 - 404 Error" name="description">
+    <title>404 - 页面未找到 | Page Not Found</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +34,7 @@
         }
     </style>
 
-    <!-- Tailwind 配置 -->
+    <!-- Tailwind 配置（与主站统一） -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -45,7 +43,6 @@
                     colors: {
                         primary: '#4A90E2',
                         secondary: '#50E3C2',
-                        mihoyo: '#4A90E2',
                         dark: {
                             DEFAULT: '#1A1A2E',
                             card: '#2d2d44'
@@ -64,6 +61,7 @@
     </script>
 </head>
 
+<!-- 基础样式：适配暗黑/浅色模式 -->
 <body class="bg-light min-h-screen flex flex-col items-center justify-center p-4 dark:bg-dark transition-smooth">
 <!-- 主题切换按钮 -->
 <button class="absolute top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
@@ -84,76 +82,62 @@
     </svg>
 </button>
 
-<!-- 主内容区 -->
-<main class="max-w-4xl w-full">
-    <!-- 页面标题 -->
-    <h1 class="text-4xl md:text-5xl font-bold mb-12 text-center text-gray-800 dark:text-white">
-        <span class="lang-zh">Vers123 游戏导航</span>
-        <span class="lang-en hidden">Vers123 Game Navigation</span>
+<!-- 404 核心内容 -->
+<div class="max-w-lg w-full text-center bg-light-card dark:bg-dark-card rounded-xl shadow-lg p-8 md:p-10 transition-smooth">
+    <!-- 404 大数字 -->
+    <div class="text-9xl font-bold text-primary mb-6">
+        404
+    </div>
+
+    <!-- 标题（双语） -->
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">
+        <span class="lang-zh">哎呀！页面走丢了</span>
+        <span class="lang-en hidden">Oops! Page Not Found</span>
     </h1>
 
-    <!-- 游戏分类卡片 -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- 米哈游游戏卡片 -->
-        <a class="block group" href="./pages/mihoyo/index.html" rel="noopener noreferrer">
-            <article
-                    class="bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth group-hover:hover-lift p-6 border-0">
-                <div class="relative" style="background-color:rgb(0,0,0)">
-                    <img
-                            alt="米哈游游戏"
-                            class="w-full h-48 object-contain mb-4 rounded-lg"
-                            loading="lazy"
-                            src="./assets/images/mihoyo/logo/mihoyo.png"
-                    >
-                    <div aria-hidden="true" class="absolute top-4 right-4 text-primary">
-                        <svg class="icon w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <h2 class="text-2xl font-bold text-center text-primary">
-                    <span class="lang-zh">米哈游游戏</span>
-                    <span class="lang-en hidden">miHoYo Games</span>
-                </h2>
-                <p class="text-center mt-2 text-gray-600 dark:text-gray-400">
-                    <span class="lang-zh">原神、崩坏3、星穹铁道等</span>
-                    <span class="lang-en hidden">Genshin Impact, Honkai Impact 3rd, Star Rail, etc.</span>
-                </p>
-            </article>
+    <!-- 描述（双语） -->
+    <p class="text-gray-600 dark:text-gray-400 mb-8">
+        <span class="lang-zh">您访问的页面不存在、已被删除或网址输入错误。</span>
+        <span class="lang-en hidden">The page you're looking for doesn't exist, has been removed, or the URL was entered incorrectly.</span>
+    </p>
+
+    <!-- 游戏风格插图 -->
+    <div class="mb-8 flex justify-center">
+        <svg class="w-32 h-32 text-primary/80" fill="none" stroke="currentColor" stroke-width="1.5"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"/>
+            <path class="animate-pulse"
+                  d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                  stroke-dasharray="2" stroke-dashoffset="2"/>
+        </svg>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <!-- 返回主页按钮 -->
+        <a class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 hover:hover-lift transition-smooth flex items-center justify-center"
+           href="./index.html">
+            <svg aria-hidden="true" class="icon mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"></path>
+            </svg>
+            <span class="lang-zh">返回主页</span>
+            <span class="lang-en hidden">Back to Home</span>
         </a>
 
-        <!-- 其他游戏卡片 -->
-        <a class="block group" href="./pages/other-games/index.html" rel="noopener noreferrer">
-            <article
-                    class="bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth group-hover:hover-lift p-6 border-0">
-                <div class="relative">
-                    <img
-                            alt="其他游戏"
-                            class="w-full h-48 object-contain mb-4 rounded-lg"
-                            loading="lazy"
-                            src="./assets/images/another_games/game_logo/minecraft.svg"
-                    >
-                    <div aria-hidden="true" class="absolute top-4 right-4 text-primary">
-                        <svg class="icon w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <h2 class="text-2xl font-bold text-center text-primary">
-                    <span class="lang-zh">其他游戏</span>
-                    <span class="lang-en hidden">Other Games</span>
-                </h2>
-                <p class="text-center mt-2 text-gray-600 dark:text-gray-400">
-                    <span class="lang-zh">Minecraft</span>
-                    <span class="lang-en hidden">Minecraft</span>
-                </p>
-            </article>
-        </a>
-    </section>
-</main>
+        <!-- 刷新页面按钮 -->
+        <button class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-6 py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 hover:hover-lift transition-smooth flex items-center justify-center"
+                onclick="window.location.reload()">
+            <svg aria-hidden="true" class="icon mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"></path>
+            </svg>
+            <span class="lang-zh">刷新页面</span>
+            <span class="lang-en hidden">Refresh Page</span>
+        </button>
+    </div>
+</div>
 
 <!-- 页脚 -->
-<footer class="mt-16 text-gray-500 dark:text-gray-400 text-sm text-center">
+<footer class="mt-8 text-gray-500 dark:text-gray-400 text-sm text-center">
     <p>
         <span class="lang-zh">© 2025 Vers123 游戏导航 | 仅用于学习交流</span>
         <span class="lang-en hidden">© 2025 Vers123 Game Navigation | For learning only</span>
