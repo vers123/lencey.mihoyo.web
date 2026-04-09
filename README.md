@@ -57,7 +57,7 @@
   - [路线图](#roadmap)
   - [许可证](#license)
   - [联系方式与支持](#contact--support)
->>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
+
 - [中文版](#中文版)
   - [项目概述](#项目概述)
   - [项目特点](#项目特点)
@@ -156,7 +156,6 @@ vers123.github.io/
 =======
 ├── README.md                   # Project documentation
 └── favicon.ico                 # Website favicon
->>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
 ```
 
 ## Quick Start
@@ -441,7 +440,6 @@ vers123.github.io/
 =======
 ├── README.md                   # 项目文档
 └── favicon.ico                 # 网站图标
->>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
 ```
 
 ## 快速开始
