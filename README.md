@@ -25,6 +25,7 @@
 ## 目录 / Table of Contents
 
 - [语言选择 / Language Selection](#语言选择)
+
 - [English Version](#english-version)
     - [Project Overview](#project-overview)
     - [Project Features](#project-features)
@@ -38,8 +39,9 @@
     - [Roadmap](#roadmap)
     - [License](#license)
     - [Contact & Support](#contact--support)
-      =======
+
 - [语言选择](#语言选择)
+
 - [English Version](#english-version)
     - [项目概述](#project-overview)
     - [项目特点](#project-features)
