@@ -5,11 +5,13 @@
   <p align="center">
     简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
     <br />
-    <a href="#项目概述"><strong>探索文档</strong></a>
+    <a href="#项目概述"><strong>探索文档 »</strong></a>
     <br />
     <br />
     <a href="https://vers123.github.io">在线预览</a>
+    ·
     <a href="https://github.com/vers123/vers123.github.io/issues">提交问题</a>
+    ·
     <a href="#开发计划">功能建议</a>
   </p>
 </div>
@@ -25,7 +27,6 @@
 ## 目录 / Table of Contents
 
 - [语言选择 / Language Selection](#语言选择)
-
 - [English Version](#english-version)
     - [Project Overview](#project-overview)
     - [Project Features](#project-features)
@@ -39,23 +40,6 @@
     - [Roadmap](#roadmap)
     - [License](#license)
     - [Contact & Support](#contact--support)
-
-- [语言选择](#语言选择)
-
-- [English Version](#english-version)
-    - [项目概述](#project-overview)
-    - [项目特点](#project-features)
-    - [项目结构](#project-structure)
-    - [快速开始](#quick-start)
-    - [使用指南](#usage-guide)
-    - [支持的游戏](#supported-games)
-    - [技术栈](#technical-stack)
-    - [开发指南](#development-guide)
-    - [更新日志](#changelog)
-    - [路线图](#roadmap)
-    - [许可证](#license)
-    - [联系方式与支持](#contact--support)
-
 - [中文版](#中文版)
     - [项目概述](#项目概述)
     - [项目特点](#项目特点)
@@ -82,8 +66,7 @@
 
 ## Project Overview
 
-**Vers123 Game Navigation Website** is a clean, lightweight game navigation platform that aggregates official links for
-miHoYo games and other popular titles.
+**Vers123 Game Navigation Website** is a clean, lightweight game navigation platform that aggregates official links for miHoYo games and other popular titles.
 
 This website helps players quickly access official game resources including:
 
@@ -151,8 +134,6 @@ vers123.github.io/
 ├── index.html                  # Main homepage
 ├── 404.html                    # Custom 404 page
 └── README.md                   # Project documentation
-├── README.md                   # Project documentation
-└── favicon.ico                 # Website favicon
 ```
 
 ## Quick Start
@@ -351,8 +332,7 @@ Each game card includes:
 
 This project is provided for educational and demonstration purposes only.
 
-All game trademarks, logos, and intellectual property belong to their respective owners. This website is not affiliated
-with or endorsed by miHoYo, Microsoft, or any other game developers.
+All game trademarks, logos, and intellectual property belong to their respective owners. This website is not affiliated with or endorsed by miHoYo, Microsoft, or any other game developers.
 
 ## Contact & Support
 
@@ -434,8 +414,6 @@ vers123.github.io/
 ├── index.html                  # 主首页
 ├── 404.html                    # 自定义 404 页面
 └──  README.md                   # 项目文档
-├── README.md                   # 项目文档
-└── favicon.ico                 # 网站图标
 ```
 
 ## 快速开始
