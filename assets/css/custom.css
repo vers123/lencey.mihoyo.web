@@ -1,0 +1,363 @@
+/* ==============================================
+ * custom.css - 游戏导航站通用样式
+ * 包含：基础重置、工具类、组件样式、暗黑模式适配
+ * ============================================== */
+
+/* 1. 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* 平滑滚动 */
+}
+
+body {
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* 字体抗锯齿 */
+}
+
+/* 2. 通用工具类（补充 Tailwind） */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  display: inline-block;
+}
+
+/* 平滑过渡 */
+.transition-smooth {
+  transition: all 0.3s ease-in-out;
+}
+
+/* 悬浮上移效果 */
+.hover-lift {
+  transform: translateY(-3px);
+}
+
+/* 文本溢出省略 */
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 3. 暗黑模式适配 */
+.dark ::-webkit-scrollbar-track {
+  background: #2d2d44;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4a4a6a;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #5c5c8a;
+}
+
+/* 4. 组件样式 - 游戏卡片 */
+.game-card {
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .game-card {
+  border-color: #4a4a6a;
+}
+
+.game-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.dark .game-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 5. 组件样式 - 收藏按钮 */
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.dark .favorite-btn {
+  background: rgba(45, 45, 68, 0.9);
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 6. 组件样式 - 搜索框 */
+.search-box {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.search-input:focus {
+  border-color: #165DFF;
+  box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
+}
+
+.dark .search-input {
+  background-color: #2d2d44;
+  border-color: #4a4a6a;
+  color: #e5e5e5;
+}
+
+.dark .search-input:focus {
+  border-color: #165DFF;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+/* 7. 组件样式 - 侧边栏 */
+#sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  white-space: nowrap;
+  z-index: 40;
+}
+
+#hamburgerContainer:hover + #sidebar,
+#sidebar:hover {
+  width: 200px;
+  padding: 4px;
+}
+
+/* 8. 响应式适配 */
+@media (max-width: 768px) {
+  .search-box {
+    max-width: 200px;
+  }
+
+  .game-card {
+    transform: scale(1);
+  }
+
+  .game-card:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    max-width: 150px;
+  }
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+
+  .favorite-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* 9. 辅助样式 */
+/* 隐藏元素（无障碍友好） */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* 加载中动画 */
+.loading-spinner {
+  border: 2px solid rgba(22, 93, 255, 0.1);
+  border-radius: 50%;
+  border-top: 2px solid #165DFF;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 10. 页面过渡动画 */
+.content-section {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.content-section.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* 11. 侧边栏样式 */
+#hamburgerContainer {
+  cursor: pointer;
+  z-index: 50;
+}
+
+#sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  white-space: nowrap;
+  z-index: 40;
+}
+
+#hamburgerContainer:hover + #sidebar,
+#sidebar:hover {
+  width: 200px;
+  padding: 16px;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 12. 搜索框样式 */
+.search-box {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.search-input:focus {
+  border-color: #165DFF;
+  box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
+}
+
+.dark .search-input {
+  background-color: #2d2d44;
+  border-color: #4a4a6a;
+  color: #e5e5e5;
+}
+
+.dark .search-input:focus {
+  border-color: #165DFF;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+/* 13. 响应式优化 */
+@media (max-width: 768px) {
+  .search-box {
+    max-width: 200px;
+  }
+
+  .header-content {
+    flex-wrap: wrap;
+  }
+
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .game-card {
+    transform: scale(1);
+  }
+
+  .game-card:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    max-width: 150px;
+  }
+
+  .header-title {
+    font-size: 1rem;
+  }
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+}
