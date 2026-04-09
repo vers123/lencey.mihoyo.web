@@ -1,7 +1,11 @@
 # Vers123 Game Navigation Website / Vers123 游戏导航网站
 
 <div align="center">
+<<<<<<< HEAD
   <img src="./assets/images/common/lencey.png" alt="Logo" width="80" height="80">
+=======
+  <img src="assets/images/common/favicon.ico" alt="Logo" width="80" height="80">
+>>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
   <p align="center">
     简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
     <br />
@@ -26,6 +30,7 @@
 
 ## 目录 / Table of Contents
 
+<<<<<<< HEAD
 - [语言选择 / Language Selection](#语言选择)
 - [English Version](#english-version)
   - [Project Overview](#project-overview)
@@ -40,6 +45,22 @@
   - [Roadmap](#roadmap)
   - [License](#license)
   - [Contact & Support](#contact--support)
+=======
+- [语言选择](#语言选择)
+- [English Version](#english-version)
+  - [项目概述](#project-overview)
+  - [项目特点](#project-features)
+  - [项目结构](#project-structure)
+  - [快速开始](#quick-start)
+  - [使用指南](#usage-guide)
+  - [支持的游戏](#supported-games)
+  - [技术栈](#technical-stack)
+  - [开发指南](#development-guide)
+  - [更新日志](#changelog)
+  - [路线图](#roadmap)
+  - [许可证](#license)
+  - [联系方式与支持](#contact--support)
+>>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
 - [中文版](#中文版)
   - [项目概述](#项目概述)
   - [项目特点](#项目特点)
@@ -133,7 +154,12 @@ vers123.github.io/
 ├── tailwind.config.js          # Tailwind CSS configuration
 ├── index.html                  # Main homepage
 ├── 404.html                    # Custom 404 page
+<<<<<<< HEAD
 └── README.md                   # Project documentation
+=======
+├── README.md                   # Project documentation
+└── favicon.ico                 # Website favicon
+>>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
 ```
 
 ## Quick Start
@@ -413,7 +439,12 @@ vers123.github.io/
 ├── tailwind.config.js          # Tailwind CSS 配置
 ├── index.html                  # 主首页
 ├── 404.html                    # 自定义 404 页面
+<<<<<<< HEAD
 └──  README.md                   # 项目文档
+=======
+├── README.md                   # 项目文档
+└── favicon.ico                 # 网站图标
+>>>>>>> b2c5a0b92d123fe291ad979f10c32e20aa0325a3
 ```
 
 ## 快速开始
