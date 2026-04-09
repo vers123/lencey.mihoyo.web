@@ -1,18 +1,16 @@
 # Vers123 Game Navigation Website / Vers123 游戏导航网站
 
 <div align="center">
-  <img src="./assets/images/common/lencey.png" alt="Logo" width="80" height="80">
-  <img src="assets/images/common/favicon.ico" alt="Logo" width="80" height="80">
+  <img src="./assets/images/common/lencey.png" alt="Logo" width="640" height="640">
+  <img src="assets/images/common/favicon.ico" alt="Logo" width="640" height="640">
   <p align="center">
     简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
     <br />
-    <a href="#项目概述"><strong>探索文档 »</strong></a>
+    <a href="#项目概述"><strong>探索文档</strong></a>
     <br />
     <br />
     <a href="https://vers123.github.io">在线预览</a>
-    ·
     <a href="https://github.com/vers123/vers123.github.io/issues">提交问题</a>
-    ·
     <a href="#开发计划">功能建议</a>
   </p>
 </div>
@@ -27,50 +25,49 @@
 
 ## 目录 / Table of Contents
 
-<<<<<<< HEAD
 - [语言选择 / Language Selection](#语言选择)
 - [English Version](#english-version)
-  - [Project Overview](#project-overview)
-  - [Project Features](#project-features)
-  - [Project Structure](#project-structure)
-  - [Quick Start](#quick-start)
-  - [Usage Guide](#usage-guide)
-  - [Supported Games](#supported-games)
-  - [Tech Stack](#technical-stack)
-  - [Development Guide](#development-guide)
-  - [Changelog](#changelog)
-  - [Roadmap](#roadmap)
-  - [License](#license)
-  - [Contact & Support](#contact--support)
-=======
+    - [Project Overview](#project-overview)
+    - [Project Features](#project-features)
+    - [Project Structure](#project-structure)
+    - [Quick Start](#quick-start)
+    - [Usage Guide](#usage-guide)
+    - [Supported Games](#supported-games)
+    - [Tech Stack](#technical-stack)
+    - [Development Guide](#development-guide)
+    - [Changelog](#changelog)
+    - [Roadmap](#roadmap)
+    - [License](#license)
+    - [Contact & Support](#contact--support)
+      =======
 - [语言选择](#语言选择)
 - [English Version](#english-version)
-  - [项目概述](#project-overview)
-  - [项目特点](#project-features)
-  - [项目结构](#project-structure)
-  - [快速开始](#quick-start)
-  - [使用指南](#usage-guide)
-  - [支持的游戏](#supported-games)
-  - [技术栈](#technical-stack)
-  - [开发指南](#development-guide)
-  - [更新日志](#changelog)
-  - [路线图](#roadmap)
-  - [许可证](#license)
-  - [联系方式与支持](#contact--support)
+    - [项目概述](#project-overview)
+    - [项目特点](#project-features)
+    - [项目结构](#project-structure)
+    - [快速开始](#quick-start)
+    - [使用指南](#usage-guide)
+    - [支持的游戏](#supported-games)
+    - [技术栈](#technical-stack)
+    - [开发指南](#development-guide)
+    - [更新日志](#changelog)
+    - [路线图](#roadmap)
+    - [许可证](#license)
+    - [联系方式与支持](#contact--support)
 
 - [中文版](#中文版)
-  - [项目概述](#项目概述)
-  - [项目特点](#项目特点)
-  - [项目结构](#项目结构)
-  - [快速开始](#快速开始)
-  - [使用指南](#使用指南)
-  - [支持的游戏](#支持的游戏)
-  - [技术栈](#技术栈)
-  - [开发指南](#开发指南)
-  - [更新日志](#更新日志)
-  - [开发计划](#开发计划)
-  - [许可证说明](#许可证说明)
-  - [联系方式与支持](#联系方式与支持)
+    - [项目概述](#项目概述)
+    - [项目特点](#项目特点)
+    - [项目结构](#项目结构)
+    - [快速开始](#快速开始)
+    - [使用指南](#使用指南)
+    - [支持的游戏](#支持的游戏)
+    - [技术栈](#技术栈)
+    - [开发指南](#开发指南)
+    - [更新日志](#更新日志)
+    - [开发计划](#开发计划)
+    - [许可证说明](#许可证说明)
+    - [联系方式与支持](#联系方式与支持)
 
 ---
 
@@ -84,7 +81,8 @@
 
 ## Project Overview
 
-**Vers123 Game Navigation Website** is a clean, lightweight game navigation platform that aggregates official links for miHoYo games and other popular titles.
+**Vers123 Game Navigation Website** is a clean, lightweight game navigation platform that aggregates official links for
+miHoYo games and other popular titles.
 
 This website helps players quickly access official game resources including:
 
@@ -151,9 +149,7 @@ vers123.github.io/
 ├── tailwind.config.js          # Tailwind CSS configuration
 ├── index.html                  # Main homepage
 ├── 404.html                    # Custom 404 page
-<<<<<<< HEAD
 └── README.md                   # Project documentation
-=======
 ├── README.md                   # Project documentation
 └── favicon.ico                 # Website favicon
 ```
@@ -178,8 +174,8 @@ vers123.github.io/
    ```
 
 3. Open index.html in your web browser
-   - Double-click the file, or
-   - Use a local web server (e.g., VS Code Live Server)
+    - Double-click the file, or
+    - Use a local web server (e.g., VS Code Live Server)
 
 ### Live Access
 
@@ -210,52 +206,52 @@ Each game card includes:
 
 ### miHoYo Games
 
-| Game Name | Chinese Name | Status |
-|-----------|--------------|--------|
-| Genshin Impact | 原神 | ✅ Active |
-| Honkai Impact 3rd | 崩坏 3 | ✅ Active |
-| Honkai: Star Rail | 崩坏：星穹铁道 | ✅ Active |
-| Zenless Zone Zero | 绝区零 | ✅ Active |
-| Tears of Themis | 未定事件簿 | ✅ Active |
+| Game Name         | Chinese Name | Status   |
+|-------------------|--------------|----------|
+| Genshin Impact    | 原神           | ✅ Active |
+| Honkai Impact 3rd | 崩坏 3         | ✅ Active |
+| Honkai: Star Rail | 崩坏：星穹铁道      | ✅ Active |
+| Zenless Zone Zero | 绝区零          | ✅ Active |
+| Tears of Themis   | 未定事件簿        | ✅ Active |
 
 ### Other Games
 
-| Game Name | Chinese Name | Status |
-|-----------|--------------|--------|
-| Minecraft | 我的世界 | ✅ Active |
-| More titles coming soon | 更多游戏即将上线 | 🚧 Planned |
+| Game Name               | Chinese Name | Status     |
+|-------------------------|--------------|------------|
+| Minecraft               | 我的世界         | ✅ Active   |
+| More titles coming soon | 更多游戏即将上线     | 🚧 Planned |
 
 ## Technical Stack
 
-| Technology | Purpose |
-|------------|---------|
-| HTML5 | Semantic page structure |
-| Tailwind CSS v3 | Utility-first styling framework |
-| Vanilla JavaScript | Client-side interactivity |
-| Inline SVG | Icon system (no external dependencies) |
-| LocalStorage | Persistent user preferences |
-| GitHub Pages | Hosting & deployment |
+| Technology         | Purpose                                |
+|--------------------|----------------------------------------|
+| HTML5              | Semantic page structure                |
+| Tailwind CSS v3    | Utility-first styling framework        |
+| Vanilla JavaScript | Client-side interactivity              |
+| Inline SVG         | Icon system (no external dependencies) |
+| LocalStorage       | Persistent user preferences            |
+| GitHub Pages       | Hosting & deployment                   |
 
 ## Development Guide
 
 ### Adding a New Game
 
 1. **Prepare Assets**
-   - Add game logo/images to `assets/images/[category]/`
-   - Ensure images are optimized (WebP/PNG format, compressed)
+    - Add game logo/images to `assets/images/[category]/`
+    - Ensure images are optimized (WebP/PNG format, compressed)
 
 2. **Update HTML**
-   - Add game card to corresponding page (`pages/[category]/index.html`)
-   - Include all required links (official site, download, community)
-   - Add bilingual text (Chinese/English)
-   - Add unique `data-game-id` attribute for favorites functionality
+    - Add game card to corresponding page (`pages/[category]/index.html`)
+    - Include all required links (official site, download, community)
+    - Add bilingual text (Chinese/English)
+    - Add unique `data-game-id` attribute for favorites functionality
 
 3. **Test Implementation**
-   - Verify game card displays correctly
-   - Test all links work as expected
-   - Verify search functionality finds the new game
-   - Test favorite/unfavorite functionality
-   - Check responsive design on different screen sizes
+    - Verify game card displays correctly
+    - Test all links work as expected
+    - Verify search functionality finds the new game
+    - Test favorite/unfavorite functionality
+    - Check responsive design on different screen sizes
 
 ### Customizing Styles
 
@@ -354,7 +350,8 @@ Each game card includes:
 
 This project is provided for educational and demonstration purposes only.
 
-All game trademarks, logos, and intellectual property belong to their respective owners. This website is not affiliated with or endorsed by miHoYo, Microsoft, or any other game developers.
+All game trademarks, logos, and intellectual property belong to their respective owners. This website is not affiliated
+with or endorsed by miHoYo, Microsoft, or any other game developers.
 
 ## Contact & Support
 
@@ -435,9 +432,7 @@ vers123.github.io/
 ├── tailwind.config.js          # Tailwind CSS 配置
 ├── index.html                  # 主首页
 ├── 404.html                    # 自定义 404 页面
-<<<<<<< HEAD
 └──  README.md                   # 项目文档
-=======
 ├── README.md                   # 项目文档
 └── favicon.ico                 # 网站图标
 ```
@@ -462,8 +457,8 @@ vers123.github.io/
    ```
 
 3. 在浏览器中打开 index.html
-   - 直接双击文件，或
-   - 使用本地网页服务器（如 VS Code Live Server 插件）
+    - 直接双击文件，或
+    - 使用本地网页服务器（如 VS Code Live Server 插件）
 
 ### 在线访问
 
@@ -494,52 +489,52 @@ vers123.github.io/
 
 ### 米哈游游戏
 
-| 游戏名称（英文） | 游戏名称（中文） | 状态 |
-|---------------|---------------|------|
-| Genshin Impact | 原神 | ✅ 已上线 |
-| Honkai Impact 3rd | 崩坏 3 | ✅ 已上线 |
-| Honkai: Star Rail | 崩坏：星穹铁道 | ✅ 已上线 |
-| Zenless Zone Zero | 绝区零 | ✅ 已上线 |
-| Tears of Themis | 未定事件簿 | ✅ 已上线 |
+| 游戏名称（英文）          | 游戏名称（中文） | 状态    |
+|-------------------|----------|-------|
+| Genshin Impact    | 原神       | ✅ 已上线 |
+| Honkai Impact 3rd | 崩坏 3     | ✅ 已上线 |
+| Honkai: Star Rail | 崩坏：星穹铁道  | ✅ 已上线 |
+| Zenless Zone Zero | 绝区零      | ✅ 已上线 |
+| Tears of Themis   | 未定事件簿    | ✅ 已上线 |
 
 ### 其他游戏
 
-| 游戏名称（英文） | 游戏名称（中文） | 状态 |
-|---------------|---------------|------|
-| Minecraft | 我的世界 | ✅ 已上线 |
+| 游戏名称（英文）                | 游戏名称（中文） | 状态     |
+|-------------------------|----------|--------|
+| Minecraft               | 我的世界     | ✅ 已上线  |
 | More titles coming soon | 更多游戏即将上线 | 🚧 计划中 |
 
 ## 技术栈
 
-| 技术 | 用途 |
-|------|------|
-| HTML5 | 语义化页面结构 |
-| Tailwind CSS v3 | 工具类优先的样式框架 |
-| Vanilla JavaScript | 前端交互逻辑 |
-| 内联 SVG | 图标系统（无外部依赖） |
-| LocalStorage | 用户偏好持久化 |
-| GitHub Pages | 网站托管与部署 |
+| 技术                 | 用途          |
+|--------------------|-------------|
+| HTML5              | 语义化页面结构     |
+| Tailwind CSS v3    | 工具类优先的样式框架  |
+| Vanilla JavaScript | 前端交互逻辑      |
+| 内联 SVG             | 图标系统（无外部依赖） |
+| LocalStorage       | 用户偏好持久化     |
+| GitHub Pages       | 网站托管与部署     |
 
 ## 开发指南
 
 ### 添加新游戏
 
 1. **准备资源**
-   - 将游戏 logo / 图片添加到 `assets/images/[分类]/` 目录
-   - 确保图片已优化（WebP/PNG 格式，已压缩）
+    - 将游戏 logo / 图片添加到 `assets/images/[分类]/` 目录
+    - 确保图片已优化（WebP/PNG 格式，已压缩）
 
 2. **更新 HTML**
-   - 在对应页面添加游戏卡片 (`pages/[分类]/index.html`)
-   - 包含所有必要链接（官网、下载、社区）
-   - 添加双语文本（中 / 英文）
-   - 为收藏功能添加唯一的 `data-game-id` 属性
+    - 在对应页面添加游戏卡片 (`pages/[分类]/index.html`)
+    - 包含所有必要链接（官网、下载、社区）
+    - 添加双语文本（中 / 英文）
+    - 为收藏功能添加唯一的 `data-game-id` 属性
 
 3. **测试验证**
-   - 验证游戏卡片显示正常
-   - 测试所有链接功能正常
-   - 验证搜索功能能找到新添加的游戏
-   - 测试收藏 / 取消收藏功能
-   - 检查不同屏幕尺寸下的响应式表现
+    - 验证游戏卡片显示正常
+    - 测试所有链接功能正常
+    - 验证搜索功能能找到新添加的游戏
+    - 测试收藏 / 取消收藏功能
+    - 检查不同屏幕尺寸下的响应式表现
 
 ### 样式定制
 
