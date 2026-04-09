@@ -1,7 +1,7 @@
 # Vers123 Game Navigation Website / Vers123 游戏导航网站
 
 <div align="center">
-  <img src="./assets/images/common/lencey.png" alt="Logo" width="640" height="640">
+  <img src="/assets/images/common/lencey.png" alt="Logo" width="640" height="640">
   <p align="center">
     简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
     <br />
