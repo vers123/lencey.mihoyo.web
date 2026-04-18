@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="管理员控制台 - Vers123游戏导航" name="description">
+    <title>管理员控制台 | Admin Console</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 自定义样式 -->
+    <style>
+        @layer utilities {
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+            .hover-lift {
+                transform: translateY(-2px);
+            }
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+    </style>
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A90E2',
+                        secondary: '#50E3C2',
+                        mihoyo: '#4A90E2',
+                        dark: {
+                            DEFAULT: '#1A1A2E',
+                            card: '#2d2d44'
+                        },
+                        light: {
+                            DEFAULT: '#F7F7F9',
+                            card: '#FFFFFF'
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-light min-h-screen flex flex-col transition-smooth dark:bg-dark">
+<!-- 导航栏 -->
+<header class="sticky top-0 z-50 w-full bg-light-card dark:bg-dark-card shadow-md transition-smooth">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <!-- 左侧 Logo -->
+        <a href="../../index.html" class="flex items-center space-x-2">
+            <img src="../../assets/img/common/logo.png" alt="Logo" class="h-10 w-auto">
+            <span class="text-xl font-bold text-gray-800 dark:text-white">
+                <span class="lang-zh">Vers123 游戏导航</span>
+                <span class="lang-en hidden">Vers123 Game Nav</span>
+            </span>
+        </a>
+
+        <!-- 中间导航链接 - 仅在桌面显示 -->
+        <nav class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="text-primary font-medium">
+                <span class="lang-zh">账户管理</span>
+                <span class="lang-en hidden">Account Management</span>
+            </a>
+            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-smooth">
+                <span class="lang-zh">系统设置</span>
+                <span class="lang-en hidden">System Settings</span>
+            </a>
+        </nav>
+
+        <!-- 右侧功能按钮 -->
+        <div class="flex items-center space-x-4">
+            <!-- 主题切换按钮 -->
+            <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-smooth" 
+                    id="themeToggle">
+                <svg aria-hidden="true" class="icon icon-moon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg aria-hidden="true" class="icon icon-sun w-5 h-5 hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path>
+                </svg>
+            </button>
+
+            <!-- 语言切换按钮 -->
+            <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-smooth" 
+                    id="langToggle">
+                <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path>
+                </svg>
+            </button>
+
+            <!-- 登出按钮 -->
+            <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-smooth" 
+                    id="logoutButton">
+                <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5z"></path>
+                    <path d="M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- 主内容区 -->
+<main class="flex-1 container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- 页面标题 -->
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+            <span class="lang-zh">管理员控制台</span>
+            <span class="lang-en hidden">Admin Console</span>
+        </h1>
+
+        <!-- 统计卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 transition-smooth">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                    <span class="lang-zh">总用户数</span>
+                    <span class="lang-en hidden">Total Users</span>
+                </h2>
+                <p class="text-3xl font-bold text-primary" id="totalUsers">0</p>
+            </div>
+            <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 transition-smooth">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                    <span class="lang-zh">今日注册</span>
+                    <span class="lang-en hidden">Today's Registrations</span>
+                </h2>
+                <p class="text-3xl font-bold text-primary" id="todayRegistrations">0</p>
+            </div>
+            <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 transition-smooth">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                    <span class="lang-zh">总收藏数</span>
+                    <span class="lang-en hidden">Total Favorites</span>
+                </h2>
+                <p class="text-3xl font-bold text-primary" id="totalFavorites">0</p>
+            </div>
+        </div>
+
+        <!-- 用户管理卡片 -->
+        <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 mb-8 transition-smooth">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
+                    <span class="lang-zh">用户管理</span>
+                    <span class="lang-en hidden">User Management</span>
+                </h2>
+                <div class="flex space-x-4">
+                    <div class="relative">
+                        <input type="text" id="userSearch" placeholder="搜索用户..." 
+                               class="pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                        <svg aria-hidden="true" class="icon w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16A6.5 6.5 0 013 9.5A6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5z"></path>
+                        </svg>
+                    </div>
+                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth" onclick="exportAllUsers()">
+                        <span class="lang-zh">导出所有用户</span>
+                        <span class="lang-en hidden">Export All Users</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">ID</span>
+                                <span class="lang-en hidden">ID</span>
+                            </th>
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">昵称</span>
+                                <span class="lang-en hidden">Nickname</span>
+                            </th>
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">邮箱</span>
+                                <span class="lang-en hidden">Email</span>
+                            </th>
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">创建时间</span>
+                                <span class="lang-en hidden">Created At</span>
+                            </th>
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">收藏数</span>
+                                <span class="lang-en hidden">Favorites</span>
+                            </th>
+                            <th class="py-3 px-4 text-left text-gray-600 dark:text-gray-400 font-medium">
+                                <span class="lang-zh">操作</span>
+                                <span class="lang-en hidden">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- 用户数据将通过JavaScript动态添加 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="bg-light-card dark:bg-dark-card shadow-inner py-8 transition-smooth">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 网站信息 -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                    <span class="lang-zh">关于我们</span>
+                    <span class="lang-en hidden">About Us</span>
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    <span class="lang-zh">Vers123游戏导航是一个专注于游戏资源整合的网站，为玩家提供便捷的游戏访问入口。</span>
+                    <span class="lang-en hidden">Vers123 Game Navigation is a website focused on integrating game resources, providing players with convenient access to games.</span>
+                </p>
+            </div>
+
+            <!-- 快速链接 -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                    <span class="lang-zh">快速链接</span>
+                    <span class="lang-en hidden">Quick Links</span>
+                </h3>
+                <ul class="space-y-2">
+                    <li><a href="../../index.html" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-smooth">
+                        <span class="lang-zh">主页</span>
+                        <span class="lang-en hidden">Home</span>
+                    </a></li>
+                    <li><a href="../mihoyo/index.html" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-smooth">
+                        <span class="lang-zh">米哈游</span>
+                        <span class="lang-en hidden">miHoYo</span>
+                    </a></li>
+                    <li><a href="../other-games/index.html" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-smooth">
+                        <span class="lang-zh">其他游戏</span>
+                        <span class="lang-en hidden">Other Games</span>
+                    </a></li>
+                    <li><a href="login.html" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-smooth">
+                        <span class="lang-zh">管理员登录</span>
+                        <span class="lang-en hidden">Admin Login</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- 联系我们 -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                    <span class="lang-zh">联系我们</span>
+                    <span class="lang-en hidden">Contact Us</span>
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    <span class="lang-zh">邮箱：contact@vers123.com</span>
+                    <span class="lang-en hidden">Email: contact@vers123.com</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 版权信息 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <p>
+                <span class="lang-zh">© 2025 Vers123 游戏导航 | 仅用于学习交流</span>
+                <span class="lang-en hidden">© 2025 Vers123 Game Navigation | For learning only</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script>
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化公共功能
+        initCommonFeatures();
+        
+        // 检查管理员登录状态
+        if (!localStorage.getItem('adminLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+        
+        // 加载用户数据
+        loadUsersData();
+        
+        // 绑定搜索事件
+        document.getElementById('userSearch').addEventListener('input', function() {
+            searchUsers(this.value);
+        });
+        
+        // 绑定登出按钮事件
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            logoutAdmin();
+        });
+    });
+
+    // 加载用户数据
+    async function loadUsersData() {
+        try {
+            const users = await getUsers();
+            
+            // 更新统计数据
+            document.getElementById('totalUsers').textContent = users.length;
+            
+            // 计算今日注册数
+            const today = new Date().toDateString();
+            const todayRegCount = users.filter(user => new Date(user.createdAt).toDateString() === today).length;
+            document.getElementById('todayRegistrations').textContent = todayRegCount;
+            
+            // 计算总收藏数
+            const totalFavorites = users.reduce((sum, user) => sum + (user.favorites ? user.favorites.length : 0), 0);
+            document.getElementById('totalFavorites').textContent = totalFavorites;
+            
+            // 渲染用户列表
+            renderUsersTable(users);
+        } catch (error) {
+            console.error('加载用户数据失败:', error);
+            alert('加载用户数据失败');
+        }
+    }
+
+    // 渲染用户表格
+    function renderUsersTable(users) {
+        const tableBody = document.getElementById('usersTableBody');
+        
+        if (users.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                        <span class="lang-zh">暂无用户数据</span>
+                        <span class="lang-en hidden">No user data</span>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        const usersHTML = users.map(user => `
+            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth">
+                <td class="py-3 px-4 text-gray-800 dark:text-white">${user.id.substring(0, 8)}...</td>
+                <td class="py-3 px-4 text-gray-800 dark:text-white">${user.nickname}</td>
+                <td class="py-3 px-4 text-gray-800 dark:text-white">${user.email}</td>
+                <td class="py-3 px-4 text-gray-600 dark:text-gray-400">${new Date(user.createdAt).toLocaleString()}</td>
+                <td class="py-3 px-4 text-gray-600 dark:text-gray-400">${user.favorites ? user.favorites.length : 0}</td>
+                <td class="py-3 px-4">
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition-smooth text-sm" onclick="viewUserDetails('${user.id}')">
+                            <span class="lang-zh">查看</span>
+                            <span class="lang-en hidden">View</span>
+                        </button>
+                        <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-smooth text-sm" onclick="deleteUser('${user.id}')">
+                            <span class="lang-zh">删除</span>
+                            <span class="lang-en hidden">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+        
+        tableBody.innerHTML = usersHTML;
+    }
+
+    // 搜索用户
+    async function searchUsers(keyword) {
+        const users = await getUsers();
+        const filteredUsers = users.filter(user => 
+            user.nickname.toLowerCase().includes(keyword.toLowerCase()) ||
+            user.email.toLowerCase().includes(keyword.toLowerCase())
+        );
+        renderUsersTable(filteredUsers);
+    }
+
+    // 查看用户详情
+    async function viewUserDetails(userId) {
+        const users = await getUsers();
+        const user = users.find(u => u.id === userId);
+        if (!user) {
+            alert('用户不存在');
+            return;
+        }
+        
+        // 显示用户详情
+        const userDetails = `
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">用户详情</h3>
+                <p><strong>ID:</strong> ${user.id}</p>
+                <p><strong>昵称:</strong> ${user.nickname}</p>
+                <p><strong>邮箱:</strong> ${user.email}</p>
+                <p><strong>创建时间:</strong> ${new Date(user.createdAt).toLocaleString()}</p>
+                <p><strong>收藏数量:</strong> ${user.favorites ? user.favorites.length : 0}</p>
+                ${user.favorites && user.favorites.length > 0 ? 
+                    `<p><strong>收藏的游戏:</strong></p><ul>${user.favorites.map(fav => `<li>${fav.gameName}</li>`).join('')}</ul>` : 
+                    ''
+                }
+            </div>
+        `;
+        
+        alert(userDetails);
+    }
+
+    // 删除用户
+    async function deleteUser(userId) {
+        if (!confirm('确定要删除这个用户吗？')) {
+            return;
+        }
+        
+        try {
+            const users = await getUsers();
+            const updatedUsers = users.filter(u => u.id !== userId);
+            await saveUsers(updatedUsers);
+            
+            // 重新加载用户数据
+            loadUsersData();
+            alert('用户删除成功');
+        } catch (error) {
+            console.error('删除用户失败:', error);
+            alert('删除用户失败');
+        }
+    }
+
+    // 导出所有用户
+    async function exportAllUsers() {
+        try {
+            const users = await getUsers();
+            const exportData = {
+                users: users,
+                exportDate: new Date().toISOString(),
+                totalUsers: users.length
+            };
+            
+            // 创建JSON文件
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            // 创建下载链接
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `admin-export-users-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            // 清理
+            URL.revokeObjectURL(url);
+            
+            alert('用户数据导出成功');
+        } catch (error) {
+            console.error('导出用户数据失败:', error);
+            alert('导出用户数据失败');
+        }
+    }
+
+    // 管理员登出
+    function logoutAdmin() {
+        localStorage.removeItem('adminLoggedIn');
+        window.location.href = 'login.html';
+    }
+</script>
+</body>
+</html>
