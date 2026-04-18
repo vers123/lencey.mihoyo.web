@@ -18,8 +18,22 @@ let storageInitialized = false;
 async function initStorage() {
     if (storageInitialized) return;
     
+    // 首先检查localStorage是否可用
+    let localStorageAvailable = false;
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        localStorageAvailable = true;
+    } catch (error) {
+        console.warn('localStorage is not available:', error);
+        localStorageAvailable = false;
+    }
+    
     // 首先检查localStorage中是否已有数据
-    const localStorageData = localStorage.getItem('users');
+    let localStorageData = null;
+    if (localStorageAvailable) {
+        localStorageData = localStorage.getItem('users');
+    }
     
     if ('indexedDB' in window) {
         try {
@@ -39,7 +53,7 @@ async function initStorage() {
             });
             
             // 如果localStorage中有数据但IndexedDB中没有，将数据迁移到IndexedDB
-            if (localStorageData && indexedDBData.length === 0) {
+            if (localStorageAvailable && localStorageData && indexedDBData.length === 0) {
                 try {
                     const users = JSON.parse(localStorageData);
                     const transaction = db.transaction(['users'], 'readwrite');
@@ -59,7 +73,19 @@ async function initStorage() {
             storageType = 'indexedDB';
         } catch (error) {
             console.warn('IndexedDB initialization failed, falling back to localStorage', error);
+            if (localStorageAvailable) {
+                storageType = 'localStorage';
+            } else {
+                console.error('Both IndexedDB and localStorage are not available');
+                storageType = 'none';
+            }
+        }
+    } else {
+        if (localStorageAvailable) {
             storageType = 'localStorage';
+        } else {
+            console.error('Both IndexedDB and localStorage are not available');
+            storageType = 'none';
         }
     }
     
@@ -141,49 +167,75 @@ async function saveUsers(users) {
 async function getUsers() {
     await ensureStorageInitialized();
     
+    // 检查存储是否可用
+    if (storageType === 'none') {
+        console.warn('Storage is not available, returning empty array');
+        return [];
+    }
+    
     // 首先从localStorage获取数据作为基础
-    const localStorageData = JSON.parse(localStorage.getItem('users') || '[]');
+    let localStorageData = [];
+    try {
+        localStorageData = JSON.parse(localStorage.getItem('users') || '[]');
+    } catch (error) {
+        console.warn('Error parsing localStorage data:', error);
+        localStorageData = [];
+    }
     
     if (storageType === 'indexedDB' && db) {
         return new Promise((resolve) => {
-            const transaction = db.transaction(['users'], 'readonly');
-            const store = transaction.objectStore('users');
-            const request = store.getAll();
-            
-            request.onsuccess = function(event) {
-                const result = event.target.result;
+            try {
+                const transaction = db.transaction(['users'], 'readonly');
+                const store = transaction.objectStore('users');
+                const request = store.getAll();
                 
-                // 比较IndexedDB和localStorage中的数据
-                if (result.length > 0) {
-                    // 如果IndexedDB中有数据，使用它并更新localStorage
-                    localStorage.setItem('users', JSON.stringify(result));
-                    resolve(result);
-                } else if (localStorageData.length > 0) {
-                    // 如果IndexedDB中没有数据但localStorage中有，使用localStorage的数据
-                    // 并尝试将数据迁移到IndexedDB
+                request.onsuccess = function(event) {
                     try {
-                        const transaction = db.transaction(['users'], 'readwrite');
-                        const store = transaction.objectStore('users');
-                        store.clear();
-                        localStorageData.forEach(user => store.add(user));
-                        transaction.oncomplete = function() {
-                            console.log('数据从localStorage迁移到IndexedDB');
-                        };
+                        const result = event.target.result || [];
+                        
+                        // 比较IndexedDB和localStorage中的数据
+                        if (result.length > 0) {
+                            // 如果IndexedDB中有数据，使用它并更新localStorage
+                            try {
+                                localStorage.setItem('users', JSON.stringify(result));
+                            } catch (error) {
+                                console.warn('Error updating localStorage:', error);
+                            }
+                            resolve(result);
+                        } else if (localStorageData.length > 0) {
+                            // 如果IndexedDB中没有数据但localStorage中有，使用localStorage的数据
+                            // 并尝试将数据迁移到IndexedDB
+                            try {
+                                const transaction = db.transaction(['users'], 'readwrite');
+                                const store = transaction.objectStore('users');
+                                store.clear();
+                                localStorageData.forEach(user => store.add(user));
+                                transaction.oncomplete = function() {
+                                    console.log('数据从localStorage迁移到IndexedDB');
+                                };
+                            } catch (error) {
+                                console.warn('数据迁移失败:', error);
+                            }
+                            resolve(localStorageData);
+                        } else {
+                            // 两者都没有数据
+                            resolve([]);
+                        }
                     } catch (error) {
-                        console.warn('数据迁移失败:', error);
+                        console.warn('Error processing IndexedDB result:', error);
+                        resolve(localStorageData);
                     }
+                };
+                
+                request.onerror = function(event) {
+                    console.warn('IndexedDB error, using localStorage', event.target.error);
+                    // 降级到localStorage
                     resolve(localStorageData);
-                } else {
-                    // 两者都没有数据
-                    resolve([]);
-                }
-            };
-            
-            request.onerror = function(event) {
-                console.warn('IndexedDB error, using localStorage', event.target.error);
-                // 降级到localStorage
+                };
+            } catch (error) {
+                console.warn('Error accessing IndexedDB:', error);
                 resolve(localStorageData);
-            };
+            }
         });
     } else {
         return localStorageData;
