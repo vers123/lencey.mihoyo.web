@@ -340,30 +340,360 @@
     </div>
 </footer>
 
-<script src="../../assets/js/common.js"></script>
-<script src="../../assets/js/auth.js"></script>
-<script>
-    // 页面初始化
-    document.addEventListener('DOMContentLoaded', function() {
-        // 初始化公共功能
-        initCommonFeatures();
-        
-        // 检查用户是否登录
-        if (!checkLoginStatus()) {
-            window.location.href = '../auth/login.html';
-        }
-        
-        // 加载用户信息
-        loadUserInfo();
-        
-        // 加载收藏列表
-        loadFavorites();
-        
-        // 绑定登出按钮事件
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            logout();
+<!-- 编辑资料模态框 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="editProfileModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
+            <div class="bg-light-card dark:bg-dark-card rounded-lg shadow-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                        <span class="lang-zh">编辑资料</span>
+                        <span class="lang-en hidden">Edit Profile</span>
+                    </h3>
+                    <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-smooth" id="closeEditProfileModal">
+                        <svg aria-hidden="true" class="icon w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form id="editProfileForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">昵称</span>
+                            <span class="lang-en hidden">Nickname</span>
+                        </label>
+                        <input type="text" id="editNickname" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="flex space-x-2">
+                        <button type="button" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-smooth" id="cancelEditProfile">
+                            <span class="lang-zh">取消</span>
+                            <span class="lang-en hidden">Cancel</span>
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth">
+                            <span class="lang-zh">保存</span>
+                            <span class="lang-en hidden">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密码模态框 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="changePasswordModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
+            <div class="bg-light-card dark:bg-dark-card rounded-lg shadow-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                        <span class="lang-zh">修改密码</span>
+                        <span class="lang-en hidden">Change Password</span>
+                    </h3>
+                    <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-smooth" id="closeChangePasswordModal">
+                        <svg aria-hidden="true" class="icon w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form id="changePasswordForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">当前密码</span>
+                            <span class="lang-en hidden">Current Password</span>
+                        </label>
+                        <input type="password" id="currentPassword" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">新密码</span>
+                            <span class="lang-en hidden">New Password</span>
+                        </label>
+                        <input type="password" id="newPassword" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            <span class="lang-zh">密码需要12+字符，包含大写字母、小写字母、数字和特殊符号</span>
+                            <span class="lang-en hidden">Password must be 12+ characters, including uppercase, lowercase, numbers and special symbols</span>
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">确认新密码</span>
+                            <span class="lang-en hidden">Confirm New Password</span>
+                        </label>
+                        <input type="password" id="confirmNewPassword" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="flex space-x-2">
+                        <button type="button" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-smooth" id="cancelChangePassword">
+                            <span class="lang-zh">取消</span>
+                            <span class="lang-en hidden">Cancel</span>
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth">
+                            <span class="lang-zh">保存</span>
+                            <span class="lang-en hidden">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密保问题模态框 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="changeSecurityQuestionModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
+            <div class="bg-light-card dark:bg-dark-card rounded-lg shadow-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                        <span class="lang-zh">修改密保问题</span>
+                        <span class="lang-en hidden">Change Security Question</span>
+                    </h3>
+                    <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-smooth" id="closeChangeSecurityQuestionModal">
+                        <svg aria-hidden="true" class="icon w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form id="changeSecurityQuestionForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">账户ID</span>
+                            <span class="lang-en hidden">Account ID</span>
+                        </label>
+                        <input type="text" id="accountId" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">密保问题</span>
+                            <span class="lang-en hidden">Security Question</span>
+                        </label>
+                        <select id="newSecurityQuestion" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                            <option value="What is your school name?">What is your school name?</option>
+                            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                            <option value="What is your favorite movie?">What is your favorite movie?</option>
+                            <option value="What is your favorite book?">What is your favorite book?</option>
+                            <option value="What is your first pet's name?">What is your first pet's name?</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">密保答案</span>
+                            <span class="lang-en hidden">Security Answer</span>
+                        </label>
+                        <input type="text" id="newSecurityAnswer" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                            <span class="lang-zh">确认密保答案</span>
+                            <span class="lang-en hidden">Confirm Security Answer</span>
+                        </label>
+                        <input type="text" id="confirmSecurityAnswer" class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth">
+                    </div>
+                    <div class="flex space-x-2">
+                        <button type="button" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-smooth" id="cancelChangeSecurityQuestion">
+                            <span class="lang-zh">取消</span>
+                            <span class="lang-en hidden">Cancel</span>
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth">
+                            <span class="lang-zh">保存</span>
+                            <span class="lang-en hidden">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录历史模态框 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="loginHistoryModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl">
+            <div class="bg-light-card dark:bg-dark-card rounded-lg shadow-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                        <span class="lang-zh">登录历史</span>
+                        <span class="lang-en hidden">Login History</span>
+                    </h3>
+                    <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-smooth" id="closeLoginHistoryModal">
+                        <svg aria-hidden="true" class="icon w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="loginHistoryList" class="max-h-96 overflow-y-auto">
+                    <!-- 登录历史将通过JavaScript动态添加 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/common.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化公共功能
+            initCommonFeatures();
+            
+            // 检查用户是否登录
+            if (!checkLoginStatus()) {
+                window.location.href = '../auth/login.html';
+            }
+            
+            // 加载用户信息
+            loadUserInfo();
+            
+            // 加载收藏列表
+            loadFavorites();
+            
+            // 绑定登出按钮事件
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                logout();
+            });
+            
+            // 绑定编辑资料按钮事件
+            document.querySelector('button:has(.lang-zh:contains(编辑资料))').addEventListener('click', function() {
+                const nickname = document.getElementById('userNickname').textContent;
+                document.getElementById('editNickname').value = nickname;
+                document.getElementById('editProfileModal').classList.remove('hidden');
+            });
+            
+            // 绑定关闭编辑资料模态框事件
+            document.getElementById('closeEditProfileModal').addEventListener('click', function() {
+                document.getElementById('editProfileModal').classList.add('hidden');
+            });
+            
+            // 绑定取消编辑资料事件
+            document.getElementById('cancelEditProfile').addEventListener('click', function() {
+                document.getElementById('editProfileModal').classList.add('hidden');
+            });
+            
+            // 绑定编辑资料表单提交事件
+            document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const nickname = document.getElementById('editNickname').value;
+                
+                if (!nickname) {
+                    alert('请输入昵称');
+                    return;
+                }
+                
+                const success = await updateUserProfile(nickname);
+                if (success) {
+                    alert('资料修改成功');
+                    loadUserInfo();
+                    document.getElementById('editProfileModal').classList.add('hidden');
+                } else {
+                    alert('资料修改失败，请重试');
+                }
+            });
+            
+            // 绑定修改密码按钮事件
+            document.querySelector('button:has(.lang-zh:contains(修改密码))').addEventListener('click', function() {
+                document.getElementById('changePasswordModal').classList.remove('hidden');
+            });
+            
+            // 绑定关闭修改密码模态框事件
+            document.getElementById('closeChangePasswordModal').addEventListener('click', function() {
+                document.getElementById('changePasswordModal').classList.add('hidden');
+            });
+            
+            // 绑定取消修改密码事件
+            document.getElementById('cancelChangePassword').addEventListener('click', function() {
+                document.getElementById('changePasswordModal').classList.add('hidden');
+            });
+            
+            // 绑定修改密码表单提交事件
+            document.getElementById('changePasswordForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+                
+                const result = await changePassword(currentPassword, newPassword, confirmNewPassword);
+                if (result.success) {
+                    alert(result.message);
+                    document.getElementById('changePasswordModal').classList.add('hidden');
+                } else {
+                    alert(result.message);
+                }
+            });
+            
+            // 绑定修改密保问题按钮事件
+            document.querySelector('button:has(.lang-zh:contains(修改密保问题))').addEventListener('click', function() {
+                const userId = document.getElementById('userId').textContent;
+                document.getElementById('accountId').value = userId;
+                document.getElementById('changeSecurityQuestionModal').classList.remove('hidden');
+            });
+            
+            // 绑定关闭修改密保问题模态框事件
+            document.getElementById('closeChangeSecurityQuestionModal').addEventListener('click', function() {
+                document.getElementById('changeSecurityQuestionModal').classList.add('hidden');
+            });
+            
+            // 绑定取消修改密保问题事件
+            document.getElementById('cancelChangeSecurityQuestion').addEventListener('click', function() {
+                document.getElementById('changeSecurityQuestionModal').classList.add('hidden');
+            });
+            
+            // 绑定修改密保问题表单提交事件
+            document.getElementById('changeSecurityQuestionForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const userId = document.getElementById('accountId').value;
+                const securityQuestion = document.getElementById('newSecurityQuestion').value;
+                const securityAnswer = document.getElementById('newSecurityAnswer').value;
+                const confirmAnswer = document.getElementById('confirmSecurityAnswer').value;
+                
+                const result = await changeSecurityQuestion(userId, securityQuestion, securityAnswer, confirmAnswer);
+                if (result.success) {
+                    alert(result.message);
+                    document.getElementById('changeSecurityQuestionModal').classList.add('hidden');
+                } else {
+                    alert(result.message);
+                }
+            });
+            
+            // 绑定登录历史按钮事件
+            document.querySelector('button:has(.lang-zh:contains(登录历史))').addEventListener('click', function() {
+                loadLoginHistory();
+                document.getElementById('loginHistoryModal').classList.remove('hidden');
+            });
+            
+            // 绑定关闭登录历史模态框事件
+            document.getElementById('closeLoginHistoryModal').addEventListener('click', function() {
+                document.getElementById('loginHistoryModal').classList.add('hidden');
+            });
         });
-    });
-</script>
+        
+        // 加载登录历史
+        function loadLoginHistory() {
+            const userId = getCurrentUser();
+            if (!userId) return;
+            
+            const loginHistory = getLoginHistory(userId);
+            const loginHistoryList = document.getElementById('loginHistoryList');
+            
+            if (loginHistory.length === 0) {
+                loginHistoryList.innerHTML = `
+                    <div class="text-gray-500 dark:text-gray-400 text-center py-8">
+                        <span class="lang-zh">暂无登录历史</span>
+                        <span class="lang-en hidden">No login history</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 生成登录历史列表
+            const historyHTML = loginHistory.map(item => `
+                <div class="p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth mb-2">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-medium text-gray-800 dark:text-white">${item.ip}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">${new Date(item.timestamp).toLocaleString()}</p>
+                        </div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">
+                            ${item.userAgent.substring(0, 50)}${item.userAgent.length > 50 ? '...' : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            loginHistoryList.innerHTML = historyHTML;
+        }
+    </script>
 </body>
 </html>

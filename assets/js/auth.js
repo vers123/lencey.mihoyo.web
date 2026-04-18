@@ -328,6 +328,9 @@ async function handleLogin() {
     // 保存登录状态
     saveCurrentUser(user.id);
     
+    // 记录登录历史
+    recordLoginHistory();
+    
     // 跳转到账户页面
     window.location.href = '../account/index.html';
 }
@@ -577,6 +580,161 @@ async function importUserData(event) {
     }
 }
 
+// 编辑用户资料
+async function updateUserProfile(nickname) {
+    const userId = getCurrentUser();
+    if (!userId) return false;
+
+    try {
+        const users = await getUsers();
+        const updatedUsers = users.map(user => {
+            if (user.id === userId) {
+                return { ...user, nickname };
+            }
+            return user;
+        });
+        await saveUsers(updatedUsers);
+        return true;
+    } catch (error) {
+        console.error('更新用户资料失败:', error);
+        return false;
+    }
+}
+
+// 修改密码
+async function changePassword(currentPassword, newPassword, confirmPassword, userId = null, securityAnswer = null, securityQuestion = null) {
+    const currentUserId = userId || getCurrentUser();
+    if (!currentUserId) return { success: false, message: '用户未登录' };
+
+    // 密码强度验证
+    if (!isPasswordStrong(newPassword)) {
+        return { success: false, message: '密码强度不足！需要12+字符，包含大写字母、小写字母、数字和特殊符号' };
+    }
+
+    // 密码一致性检查
+    if (newPassword !== confirmPassword) {
+        return { success: false, message: '两次输入的密码不一致' };
+    }
+
+    try {
+        const users = await getUsers();
+        const user = users.find(u => u.id === currentUserId);
+        
+        if (!user) {
+            return { success: false, message: '用户不存在' };
+        }
+
+        // 验证当前密码或密保问题
+        let isValid = false;
+        if (currentPassword) {
+            // 使用当前密码验证
+            isValid = verifyPassword(currentPassword, user.password);
+        } else if (securityAnswer && securityQuestion) {
+            // 使用密保问题验证
+            isValid = user.securityQuestion === securityQuestion && verifyPassword(securityAnswer, user.securityAnswer);
+        }
+
+        if (!isValid) {
+            return { success: false, message: '验证失败，请检查输入' };
+        }
+
+        // 更新密码
+        const updatedUsers = users.map(u => {
+            if (u.id === currentUserId) {
+                return { ...u, password: encryptPassword(newPassword) };
+            }
+            return u;
+        });
+        await saveUsers(updatedUsers);
+        
+        return { success: true, message: '密码修改成功' };
+    } catch (error) {
+        console.error('修改密码失败:', error);
+        return { success: false, message: '修改密码失败，请重试' };
+    }
+}
+
+// 修改密保问题
+async function changeSecurityQuestion(userId, securityQuestion, securityAnswer, confirmAnswer) {
+    if (!userId) return { success: false, message: '请提供账户ID' };
+
+    // 答案一致性检查
+    if (securityAnswer !== confirmAnswer) {
+        return { success: false, message: '两次输入的答案不一致' };
+    }
+
+    try {
+        const users = await getUsers();
+        const user = users.find(u => u.id === userId);
+        
+        if (!user) {
+            return { success: false, message: '用户不存在' };
+        }
+
+        // 更新密保问题和答案
+        const updatedUsers = users.map(u => {
+            if (u.id === userId) {
+                return { 
+                    ...u, 
+                    securityQuestion, 
+                    securityAnswer: encryptPassword(securityAnswer) 
+                };
+            }
+            return u;
+        });
+        await saveUsers(updatedUsers);
+        
+        return { success: true, message: '密保问题修改成功' };
+    } catch (error) {
+        console.error('修改密保问题失败:', error);
+        return { success: false, message: '修改密保问题失败，请重试' };
+    }
+}
+
+// 记录登录历史
+function recordLoginHistory() {
+    const userId = getCurrentUser();
+    if (!userId) return;
+
+    try {
+        // 获取现有登录历史
+        const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '{}');
+        
+        // 确保用户的登录历史存在
+        if (!loginHistory[userId]) {
+            loginHistory[userId] = [];
+        }
+        
+        // 添加新的登录记录
+        loginHistory[userId].unshift({
+            timestamp: new Date().toISOString(),
+            ip: '本地登录', // 实际项目中可以获取真实IP
+            userAgent: navigator.userAgent
+        });
+        
+        // 限制登录历史记录数量
+        if (loginHistory[userId].length > 20) {
+            loginHistory[userId] = loginHistory[userId].slice(0, 20);
+        }
+        
+        // 保存登录历史
+        localStorage.setItem('loginHistory', JSON.stringify(loginHistory));
+    } catch (error) {
+        console.error('记录登录历史失败:', error);
+    }
+}
+
+// 获取登录历史
+function getLoginHistory(userId) {
+    try {
+        const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '{}');
+        return loginHistory[userId] || [];
+    } catch (error) {
+        console.error('获取登录历史失败:', error);
+        return [];
+    }
+}
+
 // 导出函数
 window.handleRegister = handleRegister;
 window.handleLogin = handleLogin;
@@ -589,6 +747,12 @@ window.removeFavorite = removeFavorite;
 window.addFavorite = addFavorite;
 window.exportUserData = exportUserData;
 window.importUserData = importUserData;
+window.updateUserProfile = updateUserProfile;
+window.changePassword = changePassword;
+window.changeSecurityQuestion = changeSecurityQuestion;
+window.getLoginHistory = getLoginHistory;
+window.recordLoginHistory = recordLoginHistory;
 
 // 初始化存储
 initStorage();
+{"toolcall":{"thought":"继续修改auth.js文件，完成修改密保问题和登录历史相关的功能函数。","name":"Edit","params":{
