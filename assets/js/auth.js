@@ -755,4 +755,3 @@ window.recordLoginHistory = recordLoginHistory;
 
 // 初始化存储
 initStorage();
-{"toolcall":{"thought":"继续修改auth.js文件，完成修改密保问题和登录历史相关的功能函数。","name":"Edit","params":{
