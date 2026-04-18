@@ -117,6 +117,33 @@
     </svg>
 </a>
 
+<!-- 登录/注册按钮 -->
+<div id="authButtons" class="fixed top-4 left-32 flex items-center space-x-2 z-10">
+    <a href="../auth/login.html" class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-smooth text-sm">
+        <span class="lang-zh">登录</span>
+        <span class="lang-en hidden">Login</span>
+    </a>
+    <a href="../auth/register.html" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm">
+        <span class="lang-zh">注册</span>
+        <span class="lang-en hidden">Register</span>
+    </a>
+</div>
+
+<!-- 已登录用户菜单 -->
+<div id="userMenu" class="fixed top-4 left-32 hidden flex items-center space-x-2 z-10">
+    <a href="../account/index.html" class="px-4 py-2 text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary transition-smooth text-sm">
+        <span class="lang-zh">账户</span>
+        <span class="lang-en hidden">Account</span>
+    </a>
+    <button class="p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth" 
+            id="logoutButton">
+        <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5z"></path>
+            <path d="M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path>
+        </svg>
+    </button>
+</div>
+
 <!-- 主内容区 -->
 <main class="container mx-auto px-4 py-16 max-w-5xl">
     <!-- 页面标题 -->
@@ -163,6 +190,106 @@
                 </div>
             </a>
         </div>
+
+        <!-- Counter-Strike 2 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift overflow-hidden"
+             data-game-name="Counter-Strike 2 CS2">
+            <button class="favorite-btn text-gray-400 hover:text-red-500" data-game-id="cs2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
+            <a href="https://www.counter-strike.net/cs2" rel="noopener noreferrer" target="_blank">
+                <div class="w-full h-32 bg-gradient-to-r from-blue-600 to-blue-800 flex items-center justify-center p-4">
+                    <div class="text-white text-center">
+                        <h3 class="text-2xl font-bold">CS2</h3>
+                        <p class="text-sm">Counter-Strike 2</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-primary mb-2">Counter-Strike 2</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        <span class="lang-zh">第一人称射击游戏</span>
+                        <span class="lang-en hidden">First-person Shooter</span>
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <!-- The Legend of Zelda -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift overflow-hidden"
+             data-game-name="The Legend of Zelda 塞尔达传说">
+            <button class="favorite-btn text-gray-400 hover:text-red-500" data-game-id="zelda">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
+            <a href="https://www.zelda.com/" rel="noopener noreferrer" target="_blank">
+                <div class="w-full h-32 bg-gradient-to-r from-green-600 to-green-800 flex items-center justify-center p-4">
+                    <div class="text-white text-center">
+                        <h3 class="text-2xl font-bold">Zelda</h3>
+                        <p class="text-sm">The Legend of Zelda</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-primary mb-2">The Legend of Zelda</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        <span class="lang-zh">动作冒险游戏</span>
+                        <span class="lang-en hidden">Action-Adventure Game</span>
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <!-- League of Legends -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift overflow-hidden"
+             data-game-name="League of Legends 英雄联盟">
+            <button class="favorite-btn text-gray-400 hover:text-red-500" data-game-id="lol">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
+            <a href="https://na.leagueoflegends.com/" rel="noopener noreferrer" target="_blank">
+                <div class="w-full h-32 bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center p-4">
+                    <div class="text-white text-center">
+                        <h3 class="text-2xl font-bold">LoL</h3>
+                        <p class="text-sm">League of Legends</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-primary mb-2">League of Legends</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        <span class="lang-zh">MOBA游戏</span>
+                        <span class="lang-en hidden">MOBA Game</span>
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Fortnite -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift overflow-hidden"
+             data-game-name="Fortnite 堡垒之夜">
+            <button class="favorite-btn text-gray-400 hover:text-red-500" data-game-id="fortnite">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
+            <a href="https://www.epicgames.com/fortnite/en-US/home" rel="noopener noreferrer" target="_blank">
+                <div class="w-full h-32 bg-gradient-to-r from-blue-400 to-purple-600 flex items-center justify-center p-4">
+                    <div class="text-white text-center">
+                        <h3 class="text-2xl font-bold">Fortnite</h3>
+                        <p class="text-sm">堡垒之夜</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-primary mb-2">Fortnite</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        <span class="lang-zh">大逃杀游戏</span>
+                        <span class="lang-en hidden">Battle Royale Game</span>
+                    </p>
+                </div>
+            </a>
+        </div>
     </div>
 </main>
 
@@ -174,110 +301,42 @@
     </p>
 </footer>
 
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/auth.js"></script>
 <script>
     // 页面初始化
     document.addEventListener('DOMContentLoaded', function() {
-        // 1. 初始化暗黑模式
-        const isDark = localStorage.getItem('theme') === 'dark';
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            document.querySelector('.icon-moon').style.display = 'none';
-            document.querySelector('.icon-sun').style.display = 'inline';
-        }
-
-        // 2. 初始化语言
-        const preferredLang = localStorage.getItem('preferredLang');
-        if (preferredLang === 'en') {
-            toggleLanguage();
-        }
-
-        // 3. 绑定主题切换
-        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-
-        // 4. 绑定语言切换
-        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
-
-        // 5. 初始化收藏功能
+        // 初始化公共功能
+        initCommonFeatures();
+        // 检查登录状态
+        checkAuthStatus();
+        // 初始化收藏功能
         initFavorites();
-
-        // 6. 初始化搜索功能
+        // 初始化搜索功能
         initSearch();
-    });
-
-    // 切换暗黑模式
-    function toggleTheme() {
-        const html = document.documentElement;
-        html.classList.toggle('dark');
-        const isDark = html.classList.contains('dark');
-
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-        // 切换图标
-        const iconMoon = document.querySelector('.icon-moon');
-        const iconSun = document.querySelector('.icon-sun');
-        iconMoon.style.display = isDark ? 'none' : 'inline';
-        iconSun.style.display = isDark ? 'inline' : 'none';
-    }
-
-    // 切换语言
-    function toggleLanguage() {
-        const zhElements = document.querySelectorAll('.lang-zh');
-        const enElements = document.querySelectorAll('.lang-en');
-        const isZhVisible = zhElements[0].style.display !== 'none';
-
-        // 切换显示状态
-        zhElements.forEach(el => el.style.display = isZhVisible ? 'none' : 'inline');
-        enElements.forEach(el => el.style.display = isZhVisible ? 'inline' : 'none');
-
-        // 保存语言设置
-        localStorage.setItem('preferredLang', isZhVisible ? 'en' : 'zh');
-    }
-
-    // 初始化收藏功能
-    function initFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            const gameId = btn.dataset.gameId;
-            if (favorites.includes(gameId)) {
-                btn.classList.add('active');
-            }
-
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const index = favorites.indexOf(gameId);
-                if (index > -1) {
-                    favorites.splice(index, 1);
-                    this.classList.remove('active');
-                } else {
-                    favorites.push(gameId);
-                    this.classList.add('active');
-                }
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-            });
-        });
-    }
-
-    // 初始化搜索功能
-    function initSearch() {
-        const searchInput = document.getElementById('searchInput');
-        const searchInputEn = document.getElementById('searchInputEn');
-        const gameCards = document.querySelectorAll('.game-card');
-
-        function filterGames(query) {
-            const lowerQuery = query.toLowerCase();
-            gameCards.forEach(card => {
-                const gameName = card.dataset.gameName.toLowerCase();
-                if (gameName.includes(lowerQuery)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+        
+        // 绑定登出按钮事件
+        if (document.getElementById('logoutButton')) {
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                logout();
             });
         }
-
-        searchInput.addEventListener('input', (e) => filterGames(e.target.value));
-        searchInputEn.addEventListener('input', (e) => filterGames(e.target.value));
+    });
+    
+    // 检查认证状态
+    function checkAuthStatus() {
+        const authButtons = document.getElementById('authButtons');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (checkLoginStatus()) {
+            // 已登录
+            if (authButtons) authButtons.classList.add('hidden');
+            if (userMenu) userMenu.classList.remove('hidden');
+        } else {
+            // 未登录
+            if (authButtons) authButtons.classList.remove('hidden');
+            if (userMenu) userMenu.classList.add('hidden');
+        }
     }
 </script>
 </body>

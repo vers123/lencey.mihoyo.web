@@ -121,10 +121,17 @@ vers123.github.io/
 │   │   │   └── game_logo/      # Game logos
 │   │   └── common/             # Shared images (logo, icons)
 │   ├── js/                     # JavaScript files
-│   │   └── main.js             # Global functionality
+│   │   ├── common.js           # Shared functionality
+│   │   └── auth.js             # Authentication functionality
 │   └── css/
 │       └── custom.css          # Custom styles & overrides
 ├── pages/                      # Subpages
+│   ├── auth/
+│   │   ├── login.html          # Login page
+│   │   ├── register.html       # Registration page
+│   │   └── forgot-password.html # Forgot password page
+│   ├── account/
+│   │   └── index.html          # Account management page
 │   ├── mihoyo/
 │   │   └── index.html          # miHoYo games navigation
 │   └── other-games/
@@ -172,6 +179,7 @@ vers123.github.io/
 - **Other Games**: Click to access other popular games navigation page
 - **Language Toggle**: Switch between Chinese/English interface
 - **Theme Toggle**: Switch between light/dark mode
+- **Login/Register**: Access account system for user authentication
 
 ### Game Navigation Pages
 
@@ -201,7 +209,10 @@ Each game card includes:
 | Game Name               | Chinese Name | Status     |
 |-------------------------|--------------|------------|
 | Minecraft               | 我的世界         | ✅ Active   |
-| More titles coming soon | 更多游戏即将上线     | 🚧 Planned |
+| Counter-Strike 2        | CS2          | ✅ Active   |
+| The Legend of Zelda     | 塞尔达传说        | ✅ Active   |
+| League of Legends       | 英雄联盟         | ✅ Active   |
+| Fortnite                | 堡垒之夜         | ✅ Active   |
 
 ## Technical Stack
 
@@ -211,7 +222,7 @@ Each game card includes:
 | Tailwind CSS v3    | Utility-first styling framework        |
 | Vanilla JavaScript | Client-side interactivity              |
 | Inline SVG         | Icon system (no external dependencies) |
-| LocalStorage       | Persistent user preferences            |
+| LocalStorage       | Persistent user data and preferences   |
 | GitHub Pages       | Hosting & deployment                   |
 
 ## Development Guide
@@ -252,6 +263,24 @@ Each game card includes:
 - [ ] Semantic HTML for better SEO
 
 ## Changelog
+
+### V2.8 (2026-04-19)
+
+- 🔐 Implemented local account system with localStorage persistence
+- 📝 Added user registration, login, and password reset functionality
+- 👤 Created account management page with user information and favorites management
+- 🔒 Added password strength validation (12+ characters, mixed case, numbers, symbols)
+- 🔄 Updated navigation bars across all pages with login/register buttons
+- 📱 Implemented responsive auth UI elements
+
+### V2.7 (2026-04-19)
+
+- 🚀 Extracted common JavaScript functionality to shared file (common.js)
+- 🐛 Fixed duplicate data-game-id issue in miHoYo games page
+- 🎮 Added Counter-Strike 2, The Legend of Zelda, League of Legends, and Fortnite to "Other Games" category
+- 📝 Updated README.md with latest game additions and file structure changes
+- 🧹 Removed unused main.js file
+- 🔧 Improved 404 page with correct home link and shared functionality
 
 ### V2.6 (2026-03-15)
 
@@ -323,7 +352,7 @@ Each game card includes:
 
 ### Long-term (Next 6+ months)
 
-- [ ] User account system (optional)
+- [x] User account system (optional, local implementation)
 - [ ] Mobile app version (Progressive Web App)
 - [ ] API integration for game data
 - [ ] Community features (ratings, comments)
@@ -401,10 +430,17 @@ vers123.github.io/
 │   │   │   └── game_logo/      # 游戏 logo
 │   │   └── common/             # 共享图片（logo、图标）
 │   ├── js/                     # JavaScript 文件
-│   │   └── main.js             # 全局功能
+│   │   ├── common.js           # 共享功能
+│   │   └── auth.js             # 认证功能
 │   └── css/
 │       └── custom.css          # 自定义样式和覆盖
 ├── pages/                      # 子页面
+│   ├── auth/
+│   │   ├── login.html          # 登录页面
+│   │   ├── register.html       # 注册页面
+│   │   └── forgot-password.html # 忘记密码页面
+│   ├── account/
+│   │   └── index.html          # 账户管理页面
 │   ├── mihoyo/
 │   │   └── index.html          # 米哈游游戏导航
 │   └── other-games/
@@ -452,6 +488,7 @@ vers123.github.io/
 - **其他游戏**：点击进入其他热门游戏导航页面
 - **语言切换**：在中英文界面间切换
 - **主题切换**：在暗黑 / 浅色模式间切换
+- **登录/注册**：访问账户系统进行用户认证
 
 ### 游戏导航页面
 
@@ -481,7 +518,10 @@ vers123.github.io/
 | 游戏名称（英文）                | 游戏名称（中文） | 状态     |
 |-------------------------|----------|--------|
 | Minecraft               | 我的世界     | ✅ 已上线  |
-| More titles coming soon | 更多游戏即将上线 | 🚧 计划中 |
+| Counter-Strike 2        | CS2      | ✅ 已上线  |
+| The Legend of Zelda     | 塞尔达传说    | ✅ 已上线  |
+| League of Legends       | 英雄联盟     | ✅ 已上线  |
+| Fortnite                | 堡垒之夜     | ✅ 已上线  |
 
 ## 技术栈
 
@@ -491,7 +531,7 @@ vers123.github.io/
 | Tailwind CSS v3    | 工具类优先的样式框架  |
 | Vanilla JavaScript | 前端交互逻辑      |
 | 内联 SVG             | 图标系统（无外部依赖） |
-| LocalStorage       | 用户偏好持久化     |
+| LocalStorage       | 用户数据和偏好持久化  |
 | GitHub Pages       | 网站托管与部署     |
 
 ## 开发指南
@@ -532,6 +572,24 @@ vers123.github.io/
 - [ ] 使用语义化 HTML 提升 SEO
 
 ## 更新日志
+
+### V2.8 (2026-04-19)
+
+- 🔐 实现基于localStorage的本地账户系统
+- 📝 新增用户注册、登录和密码重置功能
+- 👤 创建账户管理页面，包含用户信息和收藏管理
+- 🔒 新增密码强度验证（12+字符，包含大小写字母、数字和特殊符号）
+- 🔄 更新所有页面的导航栏，添加登录/注册按钮
+- 📱 实现响应式认证UI元素
+
+### V2.7 (2026-04-19)
+
+- 🚀 提取公共JavaScript功能到共享文件（common.js）
+- 🐛 修复米哈游游戏页面中data-game-id重复的问题
+- 🎮 在「其他游戏」分类中新增Counter-Strike 2、塞尔达传说、英雄联盟和堡垒之夜
+- 📝 更新README.md，添加最新游戏和文件结构变更
+- 🧹 移除未使用的main.js文件
+- 🔧 改进404页面，修复主页链接并使用共享功能
 
 ### V2.6 (2026-03-15)
 
@@ -603,7 +661,7 @@ vers123.github.io/
 
 ### 长期计划（6+ 个月）
 
-- [ ] 用户账号系统（可选）
+- [x] 用户账号系统（可选，本地实现）
 - [ ] 移动端应用版本（渐进式 Web 应用）
 - [ ] 游戏数据 API 集成
 - [ ] 社区功能（评分、评论）
