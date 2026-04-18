@@ -141,6 +141,9 @@ async function saveUsers(users) {
 async function getUsers() {
     await ensureStorageInitialized();
     
+    // 首先从localStorage获取数据作为基础
+    const localStorageData = JSON.parse(localStorage.getItem('users') || '[]');
+    
     if (storageType === 'indexedDB' && db) {
         return new Promise((resolve) => {
             const transaction = db.transaction(['users'], 'readonly');
@@ -149,22 +152,41 @@ async function getUsers() {
             
             request.onsuccess = function(event) {
                 const result = event.target.result;
-                // 如果IndexedDB中有数据，同时更新localStorage作为备份
+                
+                // 比较IndexedDB和localStorage中的数据
                 if (result.length > 0) {
+                    // 如果IndexedDB中有数据，使用它并更新localStorage
                     localStorage.setItem('users', JSON.stringify(result));
+                    resolve(result);
+                } else if (localStorageData.length > 0) {
+                    // 如果IndexedDB中没有数据但localStorage中有，使用localStorage的数据
+                    // 并尝试将数据迁移到IndexedDB
+                    try {
+                        const transaction = db.transaction(['users'], 'readwrite');
+                        const store = transaction.objectStore('users');
+                        store.clear();
+                        localStorageData.forEach(user => store.add(user));
+                        transaction.oncomplete = function() {
+                            console.log('数据从localStorage迁移到IndexedDB');
+                        };
+                    } catch (error) {
+                        console.warn('数据迁移失败:', error);
+                    }
+                    resolve(localStorageData);
+                } else {
+                    // 两者都没有数据
+                    resolve([]);
                 }
-                resolve(result);
             };
             
             request.onerror = function(event) {
-                console.warn('IndexedDB error, falling back to localStorage', event.target.error);
+                console.warn('IndexedDB error, using localStorage', event.target.error);
                 // 降级到localStorage
-                const localStorageData = JSON.parse(localStorage.getItem('users') || '[]');
                 resolve(localStorageData);
             };
         });
     } else {
-        return JSON.parse(localStorage.getItem('users') || '[]');
+        return localStorageData;
     }
 }
 
