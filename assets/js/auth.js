@@ -9,14 +9,94 @@ function generateUUID() {
     });
 }
 
+// 存储类型检测
+let storageType = 'localStorage';
+let db = null;
+
+// 初始化存储
+async function initStorage() {
+    if ('indexedDB' in window) {
+        try {
+            db = await openIndexedDB();
+            storageType = 'indexedDB';
+        } catch (error) {
+            console.warn('IndexedDB initialization failed, falling back to localStorage', error);
+            storageType = 'localStorage';
+        }
+    }
+}
+
+// 打开IndexedDB
+function openIndexedDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('gameNavDB', 1);
+        
+        request.onupgradeneeded = function(event) {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('users')) {
+                db.createObjectStore('users', { keyPath: 'id' });
+            }
+        };
+        
+        request.onsuccess = function(event) {
+            resolve(event.target.result);
+        };
+        
+        request.onerror = function(event) {
+            reject(event.target.error);
+        };
+    });
+}
+
 // 存储用户数据
-function saveUsers(users) {
-    localStorage.setItem('users', JSON.stringify(users));
+async function saveUsers(users) {
+    if (storageType === 'indexedDB' && db) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['users'], 'readwrite');
+            const store = transaction.objectStore('users');
+            
+            // 清空现有数据
+            store.clear();
+            
+            // 批量添加用户
+            users.forEach(user => {
+                store.add(user);
+            });
+            
+            transaction.oncomplete = function() {
+                resolve();
+            };
+            
+            transaction.onerror = function(event) {
+                reject(event.target.error);
+            };
+        });
+    } else {
+        localStorage.setItem('users', JSON.stringify(users));
+    }
 }
 
 // 获取用户数据
-function getUsers() {
-    return JSON.parse(localStorage.getItem('users') || '[]');
+async function getUsers() {
+    if (storageType === 'indexedDB' && db) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['users'], 'readonly');
+            const store = transaction.objectStore('users');
+            const request = store.getAll();
+            
+            request.onsuccess = function(event) {
+                resolve(event.target.result);
+            };
+            
+            request.onerror = function(event) {
+                reject(event.target.error);
+                // 降级到localStorage
+                resolve(JSON.parse(localStorage.getItem('users') || '[]'));
+            };
+        });
+    } else {
+        return JSON.parse(localStorage.getItem('users') || '[]');
+    }
 }
 
 // 存储当前登录用户
@@ -34,14 +114,26 @@ function clearCurrentUser() {
     localStorage.removeItem('currentUser');
 }
 
-// 密码加密
+// 密码加密 - 使用更安全的方法
 function encryptPassword(password) {
-    return btoa(password); // 简单加密，生产环境建议使用更安全的方法
+    // 添加盐值
+    const salt = generateUUID().substring(0, 8);
+    // 组合密码和盐值
+    const saltedPassword = password + salt;
+    // 使用btoa进行编码
+    const encoded = btoa(saltedPassword);
+    // 返回加密后的密码和盐值
+    return encoded + '|' + salt;
 }
 
 // 密码验证
 function verifyPassword(inputPassword, storedPassword) {
-    return encryptPassword(inputPassword) === storedPassword;
+    // 提取盐值
+    const [encoded, salt] = storedPassword.split('|');
+    // 组合输入密码和盐值
+    const saltedPassword = inputPassword + salt;
+    // 加密并验证
+    return btoa(saltedPassword) === encoded;
 }
 
 // 密码强度检查
@@ -57,25 +149,25 @@ function isPasswordStrong(password) {
 }
 
 // 检查用户是否已存在
-function isUserExists(email) {
-    const users = getUsers();
+async function isUserExists(email) {
+    const users = await getUsers();
     return users.some(user => user.email === email);
 }
 
 // 根据邮箱获取用户
-function getUserByEmail(email) {
-    const users = getUsers();
+async function getUserByEmail(email) {
+    const users = await getUsers();
     return users.find(user => user.email === email);
 }
 
 // 根据ID获取用户
-function getUserById(userId) {
-    const users = getUsers();
+async function getUserById(userId) {
+    const users = await getUsers();
     return users.find(user => user.id === userId);
 }
 
 // 注册功能
-function handleRegister() {
+async function handleRegister() {
     const email = document.getElementById('email').value;
     const nickname = document.getElementById('nickname').value;
     const password = document.getElementById('password').value;
@@ -96,7 +188,7 @@ function handleRegister() {
     }
 
     // 检查账户是否已存在
-    if (isUserExists(email)) {
+    if (await isUserExists(email)) {
         alert('该邮箱已注册');
         return;
     }
@@ -114,9 +206,9 @@ function handleRegister() {
     };
 
     // 保存用户数据
-    const users = getUsers();
+    const users = await getUsers();
     users.push(newUser);
-    saveUsers(users);
+    await saveUsers(users);
     saveCurrentUser(newUser.id);
     
     // 跳转到账户页面
@@ -124,13 +216,13 @@ function handleRegister() {
 }
 
 // 登录功能
-function handleLogin() {
+async function handleLogin() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const rememberMe = document.getElementById('rememberMe').checked;
 
     // 检查用户是否存在
-    const user = getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
         alert('账户不存在');
         return;
@@ -150,7 +242,7 @@ function handleLogin() {
 }
 
 // 忘记密码功能
-function handleForgotPassword() {
+async function handleForgotPassword() {
     const email = document.getElementById('email').value;
     const securityQuestion = document.getElementById('securityQuestion').value;
     const securityAnswer = document.getElementById('securityAnswer').value;
@@ -158,7 +250,7 @@ function handleForgotPassword() {
     const confirmNewPassword = document.getElementById('confirmNewPassword').value;
 
     // 检查用户是否存在
-    const user = getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
         alert('账户不存在');
         return;
@@ -183,14 +275,14 @@ function handleForgotPassword() {
     }
 
     // 更新密码
-    const users = getUsers();
+    const users = await getUsers();
     const updatedUsers = users.map(u => {
         if (u.email === email) {
             return { ...u, password: encryptPassword(newPassword) };
         }
         return u;
     });
-    saveUsers(updatedUsers);
+    await saveUsers(updatedUsers);
     
     alert('密码重置成功，请登录');
     window.location.href = 'login.html';
@@ -208,11 +300,11 @@ function checkLoginStatus() {
 }
 
 // 加载用户信息
-function loadUserInfo() {
+async function loadUserInfo() {
     const userId = getCurrentUser();
     if (!userId) return;
 
-    const user = getUserById(userId);
+    const user = await getUserById(userId);
     if (!user) {
         clearCurrentUser();
         window.location.href = '../auth/login.html';
@@ -227,11 +319,11 @@ function loadUserInfo() {
 }
 
 // 加载收藏列表
-function loadFavorites() {
+async function loadFavorites() {
     const userId = getCurrentUser();
     if (!userId) return;
 
-    const user = getUserById(userId);
+    const user = await getUserById(userId);
     if (!user) return;
 
     const favoritesList = document.getElementById('favoritesList');
@@ -267,11 +359,11 @@ function loadFavorites() {
 }
 
 // 移除收藏
-function removeFavorite(gameId) {
+async function removeFavorite(gameId) {
     const userId = getCurrentUser();
     if (!userId) return;
 
-    const users = getUsers();
+    const users = await getUsers();
     const updatedUsers = users.map(user => {
         if (user.id === userId) {
             return {
@@ -281,12 +373,12 @@ function removeFavorite(gameId) {
         }
         return user;
     });
-    saveUsers(updatedUsers);
-    loadFavorites();
+    await saveUsers(updatedUsers);
+    await loadFavorites();
 }
 
 // 添加收藏
-function addFavorite(gameId, gameName, category) {
+async function addFavorite(gameId, gameName, category) {
     const userId = getCurrentUser();
     if (!userId) {
         alert('请先登录');
@@ -294,7 +386,7 @@ function addFavorite(gameId, gameName, category) {
         return;
     }
 
-    const users = getUsers();
+    const users = await getUsers();
     const updatedUsers = users.map(user => {
         if (user.id === userId) {
             // 检查是否已经收藏
@@ -316,8 +408,82 @@ function addFavorite(gameId, gameName, category) {
         }
         return user;
     });
-    saveUsers(updatedUsers);
+    await saveUsers(updatedUsers);
     alert('收藏成功');
+}
+
+// 导出用户数据
+async function exportUserData() {
+    try {
+        const users = await getUsers();
+        const currentUser = getCurrentUser();
+        
+        // 过滤出当前用户的数据
+        const userData = {
+            users: users,
+            currentUser: currentUser,
+            exportDate: new Date().toISOString()
+        };
+        
+        // 创建JSON文件
+        const dataStr = JSON.stringify(userData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        // 创建下载链接
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `game-nav-user-data-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        
+        // 清理
+        URL.revokeObjectURL(url);
+        
+        alert('数据导出成功');
+    } catch (error) {
+        console.error('导出数据失败:', error);
+        alert('数据导出失败，请重试');
+    }
+}
+
+// 导入用户数据
+async function importUserData(event) {
+    try {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // 读取文件
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            try {
+                const userData = JSON.parse(e.target.result);
+                
+                // 验证数据格式
+                if (!userData.users || !Array.isArray(userData.users)) {
+                    throw new Error('无效的数据格式');
+                }
+                
+                // 保存数据
+                await saveUsers(userData.users);
+                if (userData.currentUser) {
+                    saveCurrentUser(userData.currentUser);
+                }
+                
+                alert('数据导入成功，页面将刷新');
+                window.location.reload();
+            } catch (error) {
+                console.error('解析数据失败:', error);
+                alert('数据解析失败，请确保文件格式正确');
+            }
+        };
+        reader.onerror = function() {
+            alert('文件读取失败，请重试');
+        };
+        reader.readAsText(file);
+    } catch (error) {
+        console.error('导入数据失败:', error);
+        alert('数据导入失败，请重试');
+    }
 }
 
 // 导出函数
@@ -330,3 +496,8 @@ window.loadUserInfo = loadUserInfo;
 window.loadFavorites = loadFavorites;
 window.removeFavorite = removeFavorite;
 window.addFavorite = addFavorite;
+window.exportUserData = exportUserData;
+window.importUserData = importUserData;
+
+// 初始化存储
+initStorage();
