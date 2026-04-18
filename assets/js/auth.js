@@ -141,25 +141,43 @@ async function saveUsers(users) {
                 
                 transaction.oncomplete = function() {
                     // 同时更新localStorage作为备份
-                    localStorage.setItem('users', JSON.stringify(users));
+                    try {
+                        localStorage.setItem('users', JSON.stringify(users));
+                    } catch (error) {
+                        console.warn('Error updating localStorage:', error);
+                    }
                     resolve();
                 };
                 
                 transaction.onerror = function(event) {
                     console.warn('IndexedDB error, using localStorage', event.target.error);
                     // 使用localStorage
-                    localStorage.setItem('users', JSON.stringify(users));
+                    try {
+                        localStorage.setItem('users', JSON.stringify(users));
+                    } catch (error) {
+                        console.warn('Error updating localStorage:', error);
+                    }
                     resolve();
                 };
             } catch (error) {
                 console.warn('IndexedDB error, using localStorage', error);
                 // 使用localStorage
-                localStorage.setItem('users', JSON.stringify(users));
+                try {
+                    localStorage.setItem('users', JSON.stringify(users));
+                } catch (error) {
+                    console.warn('Error updating localStorage:', error);
+                }
                 resolve();
             }
         });
     } else {
-        localStorage.setItem('users', JSON.stringify(users));
+        try {
+            localStorage.setItem('users', JSON.stringify(users));
+        } catch (error) {
+            console.warn('Error updating localStorage:', error);
+        }
+        // 返回一个resolve的Promise
+        return Promise.resolve();
     }
 }
 
