@@ -302,6 +302,9 @@ async function handleRegister() {
     await saveUsers(users);
     saveCurrentUser(newUser.id);
     
+    // 显示账户ID提示
+    alert(`注册成功！\n\n您的账户ID是：${newUser.id}\n\n请务必保存此ID，用于后续的账户管理和密码重置。`);
+    
     // 跳转到账户页面
     window.location.href = '../account/index.html';
 }

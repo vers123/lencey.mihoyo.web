@@ -122,11 +122,22 @@
             </label>
             <input type="password" id="password" name="password" 
                    class="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" 
-                   required>
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                <span class="lang-zh">密码必须至少12个字符，包含大写字母、小写字母、数字和特殊符号</span>
-                <span class="lang-en hidden">Password must be at least 12 characters, including uppercase, lowercase, numbers and special characters</span>
-            </p>
+                   required oninput="checkPasswordStrength(this.value)">
+            <div class="mt-1">
+                <div class="flex items-center space-x-2">
+                    <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div id="passwordStrengthBar" class="h-full bg-gray-300 dark:bg-gray-600 transition-all duration-300"></div>
+                    </div>
+                    <span id="passwordStrengthText" class="text-xs text-gray-500 dark:text-gray-400">
+                        <span class="lang-zh">请输入密码</span>
+                        <span class="lang-en hidden">Please enter password</span>
+                    </span>
+                </div>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <span class="lang-zh">密码必须至少12个字符，包含大写字母、小写字母、数字和特殊符号</span>
+                    <span class="lang-en hidden">Password must be at least 12 characters, including uppercase, lowercase, numbers and special characters</span>
+                </p>
+            </div>
         </div>
 
         <!-- 确认密码 -->
@@ -218,19 +229,71 @@
 </footer>
 
 <script src="../../assets/js/common.js"></script>
-<script src="../../assets/js/auth.js"></script>
-<script>
-    // 页面初始化
-    document.addEventListener('DOMContentLoaded', function() {
-        // 初始化公共功能
-        initCommonFeatures();
-        
-        // 绑定注册表单提交事件
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleRegister();
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化公共功能
+            initCommonFeatures();
+            
+            // 绑定注册表单提交事件
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleRegister();
+            });
         });
-    });
-</script>
+        
+        // 密码强度检测
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            let strength = 0;
+            let strengthClass = '';
+            let strengthMessage = '';
+            
+            // 长度检查
+            if (password.length >= 12) {
+                strength += 25;
+            }
+            
+            // 大写字母检查
+            if (/[A-Z]/.test(password)) {
+                strength += 25;
+            }
+            
+            // 小写字母检查
+            if (/[a-z]/.test(password)) {
+                strength += 25;
+            }
+            
+            // 数字检查
+            if (/[0-9]/.test(password)) {
+                strength += 25;
+            }
+            
+            // 特殊符号检查
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                strength += 25;
+            }
+            
+            // 确定强度等级
+            if (strength < 25) {
+                strengthClass = 'bg-red-500';
+                strengthMessage = '<span class="lang-zh">弱</span><span class="lang-en hidden">Weak</span>';
+            } else if (strength < 75) {
+                strengthClass = 'bg-yellow-500';
+                strengthMessage = '<span class="lang-zh">中等</span><span class="lang-en hidden">Medium</span>';
+            } else {
+                strengthClass = 'bg-green-500';
+                strengthMessage = '<span class="lang-zh">强</span><span class="lang-en hidden">Strong</span>';
+            }
+            
+            // 更新UI
+            strengthBar.style.width = strength + '%';
+            strengthBar.className = 'h-full transition-all duration-300 ' + strengthClass;
+            strengthText.innerHTML = strengthMessage;
+        }
+    </script>
 </body>
 </html>
