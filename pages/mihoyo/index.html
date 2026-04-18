@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="米哈游游戏导航 - 原神、崩坏3、星穹铁道等官方链接" name="description">
+    <title>miHoYo Games - Vers123</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 自定义样式 -->
+    <style>
+        @layer utilities {
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+            .hover-lift {
+                transform: translateY(-2px);
+            }
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .favorite-btn.active {
+            color: #ef4444;
+        }
+    </style>
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A90E2',
+                        secondary: '#50E3C2',
+                        mihoyo: '#4A90E2',
+                        dark: {
+                            DEFAULT: '#1A1A2E',
+                            card: '#2d2d44'
+                        },
+                        light: {
+                            DEFAULT: '#F7F7F9',
+                            card: '#FFFFFF'
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-light min-h-screen dark:bg-dark transition-smooth">
+<!-- 主题切换按钮 -->
+<button class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="themeToggle">
+    <svg aria-hidden="true" class="icon icon-moon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <svg aria-hidden="true" class="icon icon-sun w-5 h-5 hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path>
+    </svg>
+</button>
+
+<!-- 语言切换按钮 -->
+<button class="fixed top-4 left-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="langToggle">
+    <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path>
+    </svg>
+</button>
+
+<!-- 返回主页按钮 -->
+<a class="fixed top-4 left-16 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+   href="../../index.html">
+    <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"></path>
+    </svg>
+</a>
+
+<!-- 登录/注册按钮 -->
+<div id="authButtons" class="fixed top-4 left-32 flex items-center space-x-2 z-10">
+    <a href="../auth/login.html" class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-smooth text-sm">
+        <span class="lang-zh">登录</span>
+        <span class="lang-en hidden">Login</span>
+    </a>
+    <a href="../auth/register.html" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm">
+        <span class="lang-zh">注册</span>
+        <span class="lang-en hidden">Register</span>
+    </a>
+</div>
+
+<!-- 已登录用户菜单 -->
+<div id="userMenu" class="fixed top-4 left-32 hidden flex items-center space-x-2 z-10">
+    <a href="../account/index.html" class="px-4 py-2 text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary transition-smooth text-sm">
+        <span class="lang-zh">账户</span>
+        <span class="lang-en hidden">Account</span>
+    </a>
+    <button class="p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth" 
+            id="logoutButton">
+        <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5z"></path>
+            <path d="M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path>
+        </svg>
+    </button>
+</div>
+
+<!-- 主内容区 -->
+<main class="container mx-auto px-4 py-16 max-w-5xl">
+    <!-- 页面标题 -->
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800 dark:text-white">
+        <span class="lang-zh">米哈游游戏导航</span>
+        <span class="lang-en hidden">miHoYo Games Navigation</span>
+    </h1>
+
+    <!-- 搜索框 -->
+    <div class="mb-8">
+        <input
+                class="lang-zh w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"
+                id="searchInput"
+                placeholder="搜索游戏..."
+                type="text"
+        >
+        <input
+                class="lang-en hidden w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-light-card dark:bg-dark-card text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"
+                id="searchInputEn"
+                placeholder="Search games..."
+                type="text"
+        >
+    </div>
+
+    <!-- 游戏卡片网格 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gamesGrid">
+
+        <!-- miHoYo/Hoyoverse卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="miHoYo Hoyoverse">
+            <img alt="miHoYo"
+                 class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy"
+                 src="../../assets/images/mihoyo/logo/mihoyo.png"
+                 style="background-color:rgb(0,0,0)">
+            <h3 class="text-xl font-bold text-primary mb-2 mx-auto">
+                <span class="lang-zh">miHoYo</span>
+                <span class="lang-en hidden">Hoyoverse</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.mihoyo.com/"
+                   target="_blank">
+                    miHoYo官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyoverse.com/en-us/"
+                   target="_blank">
+                    Hoyoverse Official
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="mihoyo hoyoverse">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 原神卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="原神 Genshin Impact">
+            <img alt="原神" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/genshin_impact.jpg">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">原神</span>
+                <span class="lang-en hidden">Genshin Impact</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://ys.mihoyo.com/main/"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://genshin.hoyoverse.com/en/home?utm_source=fab&utm_medium=home"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://ys.mihoyo.com/?utm_source=yuanshen_web"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://genshin.hoyoverse.com/en/"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/ys/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/2/30/feed?page_type=30&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="genshin">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 崩坏：星穹铁道卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="崩坏：星穹铁道 Honkai Star Rail">
+            <img alt="崩坏：星穹铁道" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/honkai_star_rail.png">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">崩坏：星穹铁道</span>
+                <span class="lang-en hidden">Honkai: Star Rail</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://sr.mihoyo.com/main"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://hsr.hoyoverse.com/en-us/home?utm_source=hsrofficialweb&utm_medium=fab&utm_campaign=button"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://sr.mihoyo.com/"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://hsr.hoyoverse.com/en-us/"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/sr/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/6/42/feed?page_type=42&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="honkaistarrail">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 绝区零卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="绝区零 Zenless Zone Zero">
+            <img alt="绝区零" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/zenless_zone_zero.png">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">绝区零</span>
+                <span class="lang-en hidden">Zenless Zone Zero</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://zzz.mihoyo.com/main/"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://zenless.hoyoverse.com/en-us/main"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://zzz.mihoyo.com/main/"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://zenless.hoyoverse.com/en-us/main"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/zzz/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/8/46/feed?page_type=46&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="zenlesszonezero">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 星布谷地卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="星布谷地 Petit Planet">
+            <img alt="星布谷地" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/petit_planet.png">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">星布谷地</span>
+                <span class="lang-en hidden">Petit Planet</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://planet.mihoyo.com/home"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://planet.hoyoverse.com/en-us/home"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://planet.mihoyo.com/home"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://planet.hoyoverse.com/en-us/home"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/planet"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/10/100001/feed?page_type=100001&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="petitplanet">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 崩坏：因缘精灵卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="崩坏：因缘精灵 Honkai: Nexus Anima">
+            <img alt="崩坏：因缘精灵" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/honkai_nexus_anima.png">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">崩坏：因缘精灵</span>
+                <span class="lang-en hidden">Honkai: Nexus Anima</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://yyjl.mihoyo.com/?utm_source=bbs_note"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://hna.hoyoverse.com/en-us"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://yyjl.mihoyo.com/?utm_source=bbs_note"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://hna.hoyoverse.com/en-us"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/hna"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/9/90001/feed?page_type=90001&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="honkaianima">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 未定事件簿卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="未定事件簿 Tears of Themis">
+            <img alt="未定事件簿" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/tears_of_themis.jpg">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">未定事件簿</span>
+                <span class="lang-en hidden">Tears of Themis</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://wd.mihoyo.com/main"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://tot.hoyoverse.com/en/"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://wd.mihoyo.com/"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://tot.hoyoverse.com/en/"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/wd/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/4/38/feed?page_type=38&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="tearsofthemis">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 崩坏3卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="崩坏3 Honkai Impact 3rd">
+            <img alt="崩坏3" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/honkai_impact_3.jpg">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">崩坏3</span>
+                <span class="lang-en hidden">Honkai Impact 3rd</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://bh3.mihoyo.com/main"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://honkaiimpact3.hoyoverse.com/global/en-us/home"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://bh3.mihoyo.com/"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://honkaiimpact3.hoyoverse.com/global/en-us/fab"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/bh3/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.hoyolab.com/circles/1/34/feed?page_type=34&page_sort=hot"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="honkai3">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 崩坏学园2卡片 -->
+        <div class="game-card bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth hover:hover-lift p-4 border-0"
+             data-game-name="崩坏学园2 Houkai Gakuen 2">
+            <img alt="崩坏学园2" class="w-full h-48 object-cover rounded-lg mb-3"
+                 loading="lazy" src="../../assets/images/mihoyo/game_logo/bh2_logo_v2.jpg">
+            <h3 class="text-xl font-bold text-primary mb-2">
+                <span class="lang-zh">崩坏学园2</span>
+                <span class="lang-en hidden">Houkai Gakuen 2</span>
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.benghuai.com/index/"
+                   target="_blank">
+                    国服官网
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.benghuai.com/index/"
+                   target="_blank">
+                    Global server Official
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.benghuai.com/download/"
+                   target="_blank">
+                    国服下载
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.benghuai.com/download/"
+                   target="_blank">
+                    Global server Download
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-zh"
+                   href="https://www.miyoushe.com/bh2/"
+                   target="_blank">
+                    国服社区
+                </a>
+                <a class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm lang-en hidden"
+                   href="https://www.miyoushe.com/bh2/"
+                   target="_blank">
+                    Global server Community
+                </a>
+                <button class="favorite-btn ml-auto p-1 text-gray-400 hover:text-red-500 transition-smooth"
+                        data-game-id="honkaigakuen2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="py-6 text-center text-gray-500 dark:text-gray-400 text-sm">
+    <p>
+        <span class="lang-zh">© 2025 Vers123 游戏导航 | 仅用于学习交流</span>
+        <span class="lang-en hidden">© 2025 Vers123 Game Navigation | For learning only</span>
+    </p>
+</footer>
+
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script>
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化公共功能
+        initCommonFeatures();
+        // 检查登录状态
+        checkAuthStatus();
+        // 初始化收藏功能
+        initFavorites();
+        // 初始化搜索功能
+        initSearch();
+        
+        // 绑定登出按钮事件
+        if (document.getElementById('logoutButton')) {
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                logout();
+            });
+        }
+    });
+    
+    // 检查认证状态
+    function checkAuthStatus() {
+        const authButtons = document.getElementById('authButtons');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (checkLoginStatus()) {
+            // 已登录
+            if (authButtons) authButtons.classList.add('hidden');
+            if (userMenu) userMenu.classList.remove('hidden');
+        } else {
+            // 未登录
+            if (authButtons) authButtons.classList.remove('hidden');
+            if (userMenu) userMenu.classList.add('hidden');
+        }
+    }
+</script>
+</body>
+</html>

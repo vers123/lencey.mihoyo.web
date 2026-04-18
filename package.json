@@ -1,0 +1,23 @@
+{
+  "name": "vers123.github.io",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <img src=\"assets/images/common/favicon.ico\" alt=\"Logo\" width=\"80\" height=\"80\">\r   <p align=\"center\">\r     简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接\r     <br />\r     <a href=\"#项目概述\"><strong>探索文档 »</strong></a>\r     <br />\r     <br />\r     <a href=\"https://vers123.github.io\">在线预览</a>\r     ·\r     <a href=\"https://github.com/vers123/vers123.github.io/issues\">提交问题</a>\r     ·\r     <a href=\"#未来计划\">功能建议</a>\r   </p>\r </div>",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vers123/vers123.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vers123/vers123.github.io/issues"
+  },
+  "homepage": "https://github.com/vers123/vers123.github.io#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.2.1"
+  }
+}

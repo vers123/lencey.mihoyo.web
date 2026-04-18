@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="页面未找到 - 404 Error" name="description">
+    <title>404 - 页面未找到 | Page Not Found</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 自定义样式 -->
+    <style>
+        @layer utilities {
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+            .hover-lift {
+                transform: translateY(-2px);
+            }
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+    </style>
+
+    <!-- Tailwind 配置（与主站统一） -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A90E2',
+                        secondary: '#50E3C2',
+                        dark: {
+                            DEFAULT: '#1A1A2E',
+                            card: '#2d2d44'
+                        },
+                        light: {
+                            DEFAULT: '#F7F7F9',
+                            card: '#FFFFFF'
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<!-- 基础样式：适配暗黑/浅色模式 -->
+<body class="bg-light min-h-screen flex flex-col items-center justify-center p-4 dark:bg-dark transition-smooth">
+<!-- 主题切换按钮 -->
+<button class="absolute top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="themeToggle">
+    <svg aria-hidden="true" class="icon icon-moon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <svg aria-hidden="true" class="icon icon-sun w-5 h-5 hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path>
+    </svg>
+</button>
+
+<!-- 语言切换按钮 -->
+<button class="absolute top-4 left-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="langToggle">
+    <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path>
+    </svg>
+</button>
+
+<!-- 404 核心内容 -->
+<div class="max-w-lg w-full text-center bg-light-card dark:bg-dark-card rounded-xl shadow-lg p-8 md:p-10 transition-smooth">
+    <!-- 404 大数字 -->
+    <div class="text-9xl font-bold text-primary mb-6">
+        404
+    </div>
+
+    <!-- 标题（双语） -->
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">
+        <span class="lang-zh">哎呀！页面走丢了</span>
+        <span class="lang-en hidden">Oops! Page Not Found</span>
+    </h1>
+
+    <!-- 描述（双语） -->
+    <p class="text-gray-600 dark:text-gray-400 mb-8">
+        <span class="lang-zh">您访问的页面不存在、已被删除或网址输入错误。</span>
+        <span class="lang-en hidden">The page you're looking for doesn't exist, has been removed, or the URL was entered incorrectly.</span>
+    </p>
+
+    <!-- 游戏风格插图 -->
+    <div class="mb-8 flex justify-center">
+        <svg class="w-32 h-32 text-primary/80" fill="none" stroke="currentColor" stroke-width="1.5"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"/>
+            <path class="animate-pulse"
+                  d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                  stroke-dasharray="2" stroke-dashoffset="2"/>
+        </svg>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <!-- 返回主页按钮 -->
+        <a class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 hover:hover-lift transition-smooth flex items-center justify-center"
+           href="../index.html">
+            <svg aria-hidden="true" class="icon mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"></path>
+            </svg>
+            <span class="lang-zh">返回主页</span>
+            <span class="lang-en hidden">Back to Home</span>
+        </a>
+
+        <!-- 刷新页面按钮 -->
+        <button class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-6 py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 hover:hover-lift transition-smooth flex items-center justify-center"
+                onclick="window.location.reload()">
+            <svg aria-hidden="true" class="icon mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"></path>
+            </svg>
+            <span class="lang-zh">刷新页面</span>
+            <span class="lang-en hidden">Refresh Page</span>
+        </button>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="mt-8 text-gray-500 dark:text-gray-400 text-sm text-center">
+    <p>
+        <span class="lang-zh">© 2025 Vers123 游戏导航 | 仅用于学习交流</span>
+        <span class="lang-en hidden">© 2025 Vers123 Game Navigation | For learning only</span>
+    </p>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化公共功能
+        initCommonFeatures();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Vers123 游戏导航站 - 汇集米哈游及热门游戏官方链接" name="description">
+    <meta content="游戏导航,米哈游,原神,崩坏3,星穹铁道,Minecraft,CS2" name="keywords">
+    <meta content="Vers123" name="author">
+    <title>Vers123 Game Navigation</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 自定义样式 -->
+    <style>
+        @layer utilities {
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+            .hover-lift {
+                transform: translateY(-2px);
+            }
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+    </style>
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A90E2',
+                        secondary: '#50E3C2',
+                        mihoyo: '#4A90E2',
+                        dark: {
+                            DEFAULT: '#1A1A2E',
+                            card: '#2d2d44'
+                        },
+                        light: {
+                            DEFAULT: '#F7F7F9',
+                            card: '#FFFFFF'
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-light min-h-screen flex flex-col items-center justify-center p-4 dark:bg-dark transition-smooth">
+<!-- 主题切换按钮 -->
+<button class="absolute top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="themeToggle">
+    <svg aria-hidden="true" class="icon icon-moon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <svg aria-hidden="true" class="icon icon-sun w-5 h-5 hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.76 4.84l-1.8-1.79L3.17 5.84l1.79 1.79 1.8-2.79zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm9.83-11.17l-1.79-1.79-2.79 1.8 1.79 1.79 2.79-1.8zM17 13h6v-2h-6v2zM6.76 19.16l2.79-1.8-1.79-1.79-2.79 1.8 1.79 1.79z"></path>
+    </svg>
+</button>
+
+<!-- 语言切换按钮 -->
+<button class="absolute top-4 left-4 p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth z-10"
+        id="langToggle">
+    <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"></path>
+    </svg>
+</button>
+
+<!-- 登录/注册按钮 -->
+<div id="authButtons" class="absolute top-4 left-16 flex items-center space-x-2 z-10">
+    <a href="pages/auth/login.html" class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-smooth text-sm">
+        <span class="lang-zh">登录</span>
+        <span class="lang-en hidden">Login</span>
+    </a>
+    <a href="pages/auth/register.html" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-smooth text-sm">
+        <span class="lang-zh">注册</span>
+        <span class="lang-en hidden">Register</span>
+    </a>
+</div>
+
+<!-- 已登录用户菜单 -->
+<div id="userMenu" class="absolute top-4 left-16 hidden flex items-center space-x-2 z-10">
+    <a href="pages/account/index.html" class="px-4 py-2 text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary transition-smooth text-sm">
+        <span class="lang-zh">账户</span>
+        <span class="lang-en hidden">Account</span>
+    </a>
+    <button class="p-2 rounded-full bg-gray-200 dark:bg-dark-card text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-smooth" 
+            id="logoutButton">
+        <svg aria-hidden="true" class="icon w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5z"></path>
+            <path d="M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path>
+        </svg>
+    </button>
+</div>
+
+<!-- 主内容区 -->
+<main class="max-w-4xl w-full">
+    <!-- 页面标题 -->
+    <h1 class="text-4xl md:text-5xl font-bold mb-12 text-center text-gray-800 dark:text-white">
+        <span class="lang-zh">Vers123 游戏导航</span>
+        <span class="lang-en hidden">Vers123 Game Navigation</span>
+    </h1>
+
+    <!-- 游戏分类卡片 -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 米哈游游戏卡片 -->
+        <a class="block group" href="./pages/mihoyo/index.html" rel="noopener noreferrer">
+            <article
+                    class="bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth group-hover:hover-lift p-6 border-0">
+                <div class="relative" style="background-color:rgb(0,0,0)">
+                    <img
+                            alt="米哈游游戏"
+                            class="w-full h-48 object-contain mb-4 rounded-lg"
+                            loading="lazy"
+                            src="./assets/images/mihoyo/logo/mihoyo.png"
+                    >
+                    <div aria-hidden="true" class="absolute top-4 right-4 text-primary">
+                        <svg class="icon w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 12a2 2 0 100-4 2 2 0 000 4zm12-2a2 2 0 11-4 0 2 2 0 014 0zM4 14c0-2 2-6 8-6s8 4 8 6v2a2 2 0 01-2 2h-12a2 2 0 01-2-2v-2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold text-center text-primary">
+                    <span class="lang-zh">米哈游游戏</span>
+                    <span class="lang-en hidden">miHoYo Games</span>
+                </h2>
+                <p class="text-center mt-2 text-gray-600 dark:text-gray-400">
+                    <span class="lang-zh">原神、崩坏3、星穹铁道等</span>
+                    <span class="lang-en hidden">Genshin Impact, Honkai Impact 3rd, Star Rail, etc.</span>
+                </p>
+            </article>
+        </a>
+
+        <!-- 其他游戏卡片 -->
+        <a class="block group" href="./pages/other-games/index.html" rel="noopener noreferrer">
+            <article
+                    class="bg-light-card dark:bg-dark-card rounded-xl shadow-lg hover:shadow-xl transition-smooth group-hover:hover-lift p-6 border-0">
+                <div class="relative">
+                    <img
+                            alt="其他游戏"
+                            class="w-full h-48 object-contain mb-4 rounded-lg"
+                            loading="lazy"
+                            src="./assets/images/another_games/game_logo/minecraft.svg"
+                    >
+                    <div aria-hidden="true" class="absolute top-4 right-4 text-primary">
+                        <svg class="icon w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold text-center text-primary">
+                    <span class="lang-zh">其他游戏</span>
+                    <span class="lang-en hidden">Other Games</span>
+                </h2>
+                <p class="text-center mt-2 text-gray-600 dark:text-gray-400">
+                    <span class="lang-zh">Minecraft</span>
+                    <span class="lang-en hidden">Minecraft</span>
+                </p>
+            </article>
+        </a>
+    </section>
+</main>
+
+<!-- 页脚 -->
+<footer class="mt-16 text-gray-500 dark:text-gray-400 text-sm text-center">
+    <p>
+        <span class="lang-zh">© 2025 Vers123 游戏导航 | 仅用于学习交流</span>
+        <span class="lang-en hidden">© 2025 Vers123 Game Navigation | For learning only</span>
+    </p>
+</footer>
+
+<script src="assets/js/common.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化公共功能
+        initCommonFeatures();
+        
+        // 检查登录状态
+        checkAuthStatus();
+        
+        // 绑定登出按钮事件
+        if (document.getElementById('logoutButton')) {
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                logout();
+            });
+        }
+    });
+    
+    // 检查认证状态
+    function checkAuthStatus() {
+        const authButtons = document.getElementById('authButtons');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (checkLoginStatus()) {
+            // 已登录
+            if (authButtons) authButtons.classList.add('hidden');
+            if (userMenu) userMenu.classList.remove('hidden');
+        } else {
+            // 未登录
+            if (authButtons) authButtons.classList.remove('hidden');
+            if (userMenu) userMenu.classList.add('hidden');
+        }
+    }
+</script>
+</body>
+</html>
