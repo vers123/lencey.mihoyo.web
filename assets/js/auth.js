@@ -51,25 +51,35 @@ function openIndexedDB() {
 // 存储用户数据
 async function saveUsers(users) {
     if (storageType === 'indexedDB' && db) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['users'], 'readwrite');
-            const store = transaction.objectStore('users');
-            
-            // 清空现有数据
-            store.clear();
-            
-            // 批量添加用户
-            users.forEach(user => {
-                store.add(user);
-            });
-            
-            transaction.oncomplete = function() {
+        return new Promise((resolve) => {
+            try {
+                const transaction = db.transaction(['users'], 'readwrite');
+                const store = transaction.objectStore('users');
+                
+                // 清空现有数据
+                store.clear();
+                
+                // 批量添加用户
+                users.forEach(user => {
+                    store.add(user);
+                });
+                
+                transaction.oncomplete = function() {
+                    resolve();
+                };
+                
+                transaction.onerror = function(event) {
+                    console.warn('IndexedDB error, falling back to localStorage', event.target.error);
+                    // 降级到localStorage
+                    localStorage.setItem('users', JSON.stringify(users));
+                    resolve();
+                };
+            } catch (error) {
+                console.warn('IndexedDB error, falling back to localStorage', error);
+                // 降级到localStorage
+                localStorage.setItem('users', JSON.stringify(users));
                 resolve();
-            };
-            
-            transaction.onerror = function(event) {
-                reject(event.target.error);
-            };
+            }
         });
     } else {
         localStorage.setItem('users', JSON.stringify(users));
@@ -79,7 +89,7 @@ async function saveUsers(users) {
 // 获取用户数据
 async function getUsers() {
     if (storageType === 'indexedDB' && db) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const transaction = db.transaction(['users'], 'readonly');
             const store = transaction.objectStore('users');
             const request = store.getAll();
@@ -89,7 +99,7 @@ async function getUsers() {
             };
             
             request.onerror = function(event) {
-                reject(event.target.error);
+                console.warn('IndexedDB error, falling back to localStorage', event.target.error);
                 // 降级到localStorage
                 resolve(JSON.parse(localStorage.getItem('users') || '[]'));
             };
