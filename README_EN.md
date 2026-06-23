@@ -1,27 +1,15 @@
 # Vers123 Game Navigation Website
 
-<div style="text-align: center;">
-  <img src="assets/images/common/lencey.png" alt="Logo" style="width: 640px; height: 640px;">
-  <p style="text-align: center;">
-    A clean, lightweight game navigation platform aggregating official links for miHoYo and popular games
-    <br>
-    <a href="#project-overview"><strong>Explore Documentation »</strong></a>
-    <br><br>
-    <a href="https://vers123.github.io">Live Demo</a>
-    ·
-    <a href="https://github.com/vers123/vers123.github.io/issues">Report Issues</a>
-    ·
-    <a href="#roadmap">Feature Requests</a>
-  </p>
-</div>
+![Logo](assets/images/common/lencey.png)
 
+A clean, lightweight game navigation platform aggregating official links for miHoYo and popular games
+
+[**Explore Documentation »**](#project-overview) · [Live Demo](https://vers123.github.io) · [Report Issues](https://github.com/vers123/vers123.github.io/issues) · [Feature Requests](#roadmap)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 [![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-brightgreen)](https://vers123.github.io)
 [![Responsive Design](https://img.shields.io/badge/Design-Responsive-blue)](https://vers123.github.io)
-[![Bilingual](https://img.shields.io/badge/Language-ZH%2FEN-orange)](#language-selection)
-[![Last Update](https://img.shields.io/badge/Last%20Update-2026--05--16-yellowgreen)](https://github.com/vers123/vers123.github.io/commits/main)
-
----
+[![Bilingual](https://img.shields.io/badge/Language-ZH%2FEN-orange)](README.md)
+[![Last Update](https://img.shields.io/badge/Last%20Update-2026--06--24-yellowgreen)](https://github.com/vers123/vers123.github.io/commits/main)
 
 ## Table of Contents
 
@@ -85,7 +73,7 @@ This website helps players quickly access official game resources including:
 
 ## Project Structure
 
-```
+```text
 vers123.github.io/
 ├── .github/                    # GitHub workflows & settings
 │   └── workflows/
@@ -133,7 +121,6 @@ vers123.github.io/
 │   │   └── index.html          # Other games navigation
 │   └── 404.html                # Custom 404 page
 ├── .gitignore                  # Git ignore rules
-├── tailwind.config.js          # Tailwind CSS configuration
 ├── index.html                  # Main homepage
 └── README.md                   # Project documentation
 ```
@@ -148,11 +135,13 @@ vers123.github.io/
 ### Local Preview
 
 1. Clone this repository
+
    ```bash
    git clone https://github.com/vers123/vers123.github.io.git
    ```
 
 2. Navigate to the project directory
+
    ```bash
    cd vers123.github.io
    ```
@@ -163,8 +152,8 @@ vers123.github.io/
 
 ### Live Access
 
-- Primary: https://vers123.github.io
-- Alternative: https://www.linglan.xin
+- Primary: `https://vers123.github.io`
+- Alternative: `https://www.linglan.xin`
 
 ## Usage Guide
 
@@ -191,34 +180,34 @@ Each game card includes:
 
 ### miHoYo Games
 
-| Game Name         | Chinese Name | Status   |
-|-------------------|--------------|----------|
-| Genshin Impact    | 原神           | ✅ Active |
-| Honkai Impact 3rd | 崩坏 3         | ✅ Active |
-| Honkai: Star Rail | 崩坏：星穹铁道      | ✅ Active |
-| Zenless Zone Zero | 绝区零          | ✅ Active |
-| Tears of Themis   | 未定事件簿        | ✅ Active |
+| Game Name | Chinese Name | Status |
+| ----- | ----- | ----- |
+| Genshin Impact | 原神 | ✅ Active |
+| Honkai Impact 3rd | 崩坏 3 | ✅ Active |
+| Honkai: Star Rail | 崩坏：星穹铁道 | ✅ Active |
+| Zenless Zone Zero | 绝区零 | ✅ Active |
+| Tears of Themis | 未定事件簿 | ✅ Active |
 
 ### Other Games
 
-| Game Name               | Chinese Name | Status     |
-|-------------------------|--------------|------------|
-| Minecraft               | 我的世界         | ✅ Active   |
-| Counter-Strike 2        | CS2          | ✅ Active   |
-| The Legend of Zelda     | 塞尔达传说        | ✅ Active   |
-| League of Legends       | 英雄联盟         | ✅ Active   |
-| Fortnite                | 堡垒之夜         | ✅ Active   |
+| Game Name | Chinese Name | Status |
+| ----- | ----- | ----- |
+| Minecraft | 我的世界 | ✅ Active |
+| Counter-Strike 2 | CS2 | ✅ Active |
+| The Legend of Zelda | 塞尔达传说 | ✅ Active |
+| League of Legends | 英雄联盟 | ✅ Active |
+| Fortnite | 堡垒之夜 | ✅ Active |
 
 ## Technical Stack
 
-| Technology         | Purpose                                |
-|--------------------|----------------------------------------|
-| HTML5              | Semantic page structure                |
-| Tailwind CSS v3    | Utility-first styling framework        |
-| Vanilla JavaScript | Client-side interactivity              |
-| Inline SVG         | Icon system (no external dependencies) |
-| LocalStorage       | Persistent user data and preferences   |
-| GitHub Pages       | Hosting & deployment                   |
+| Technology | Purpose |
+| ----- | ----- |
+| HTML5 | Semantic page structure |
+| Tailwind CSS v4 (CDN) | Utility-first styling framework (loaded via CDN) |
+| Vanilla JavaScript | Client-side interactivity |
+| Inline SVG | Icon system (no external dependencies) |
+| LocalStorage | Persistent user data and preferences |
+| GitHub Pages | Hosting & deployment |
 
 ## Development Guide
 
@@ -243,9 +232,9 @@ Each game card includes:
 
 ### Customizing Styles
 
-- **Preferred**: Use Tailwind CSS utility classes directly in HTML
-- **Global Changes**: Modify `tailwind.config.js` for theme changes
+- **Preferred**: Use Tailwind CSS utility classes directly in HTML (loaded via CDN)
 - **Custom Styles**: Add to `assets/css/custom.css` (scoped with unique classes)
+- **Theme Configuration**: `assets/css/tailwind.css` contains `@theme` block for custom theme variables
 - **Dark Mode**: Ensure styles have corresponding `.dark` variants
 
 ### Performance Optimization Checklist
@@ -258,6 +247,16 @@ Each game card includes:
 - [ ] Semantic HTML for better SEO
 
 ## Changelog
+
+### V3.0 (2026-06-24)
+
+- 🔄 Upgraded Tailwind CSS from v3 to v4
+- ➕ Added `assets/css/tailwind.css` using Tailwind v4 CSS configuration approach
+- 🧹 Removed `tailwind.config.js` and `postcss.config.js` (project uses CDN delivery)
+- 📦 Simplified `package.json`, removed all tailwind-related devDependencies
+- 🎨 Unified project color scheme, all configurations now use `#4A90E2`
+- ➕ Added admin panel system settings feature (site info, interface preferences, game categories, data management, system info)
+- 📝 Updated README.md to reflect current tech stack and project structure
 
 ### V2.9 (2026-05-16)
 
@@ -302,7 +301,7 @@ Each game card includes:
 - 🧹 Consolidated and simplified CSS blocks in page headers
 - 🛡️ Improved language toggle robustness with error handling
 - 🎨 Optimized theme toggle and favorite icons (inline SVG)
-- 🌐 Added alternate domain access: vers123.GitHub.io & www.linglan.xin
+- 🌐 Added alternate domain access: `vers123.GitHub.io` & `www.linglan.xin`
 
 ### V2.4 (2025-12-23)
 
@@ -371,6 +370,6 @@ All game trademarks, logos, and intellectual property belong to their respective
 
 ## Contact & Support
 
-- 🐞 **Bug Reports**: GitHub Issues
-- 💡 **Feature Requests**: GitHub Discussions
-- 📧 **Email**: contact@linglan.xin (for important matters only)
+- 🐞 **Bug Reports**: `GitHub Issues`
+- 💡 **Feature Requests**: `GitHub Discussions`
+- 📧 **Email**: `3047493305@qq.com` (for important matters only)

@@ -198,6 +198,43 @@ function initAdminDashboard() {
             }
         });
     }
+
+    // 用户管理与系统设置切换
+    const showUsersBtn = document.getElementById('showUsersBtn');
+    const showSettingsBtn = document.getElementById('showSettingsBtn');
+    const usersSection = document.getElementById('usersSection');
+    const settingsSection = document.getElementById('settingsSection');
+    const statsCards = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-3.gap-6.mb-8');
+    const pageTitle = document.querySelector('h1.text-3xl.font-bold');
+
+    if (showUsersBtn && showSettingsBtn && usersSection && settingsSection) {
+        showUsersBtn.addEventListener('click', function() {
+            usersSection.classList.remove('hidden');
+            settingsSection.classList.add('hidden');
+            showUsersBtn.classList.add('bg-primary', 'text-white');
+            showUsersBtn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+            showSettingsBtn.classList.remove('bg-primary', 'text-white');
+            showSettingsBtn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+            if (statsCards) statsCards.classList.remove('hidden');
+            if (pageTitle) {
+                pageTitle.innerHTML = '<span class="lang-zh">管理员控制台</span><span class="lang-en hidden">Admin Console</span>';
+            }
+        });
+
+        showSettingsBtn.addEventListener('click', function() {
+            usersSection.classList.add('hidden');
+            settingsSection.classList.remove('hidden');
+            showSettingsBtn.classList.add('bg-primary', 'text-white');
+            showSettingsBtn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+            showUsersBtn.classList.remove('bg-primary', 'text-white');
+            showUsersBtn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+            if (statsCards) statsCards.classList.add('hidden');
+            if (pageTitle) {
+                pageTitle.innerHTML = '<span class="lang-zh">系统设置</span><span class="lang-en hidden">System Settings</span>';
+            }
+            initSettingsPage();
+        });
+    }
 }
 
 // 导出函数

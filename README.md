@@ -1,18 +1,12 @@
 # Vers123 Game Navigation Website
 
-<div style="text-align: center;">
-  <img src="assets/images/common/lencey.png" alt="Logo" style="width: 640px; height: 640px;">
-</div>
-
----
+![Logo](./assets/images/common/lencey.png)
 
 ## Language Selection / 语言选择
 
-| Language                | 语言                 | Documentation                 |
-|-------------------------|--------------------|-------------------------------|
+| Language | 语言 | Documentation |
+| ----- | ----- | ----- |
 | [English](README_EN.md) | [中文](README_ZH.md) | 选择您的语言 / Select your language |
-
----
 
 ## About This Project
 
@@ -26,7 +20,7 @@
 
 - 🌐 **Live Demo**: [https://vers123.github.io](https://vers123.github.io)
 - 🐛 **Report Issues**: [GitHub Issues](https://github.com/vers123/vers123.github.io/issues)
-- 📧 **Contact**: contact@linglan.xin
+- 📧 **Contact**: `3047493305@qq.com`
 
 ---
 

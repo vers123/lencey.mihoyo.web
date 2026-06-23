@@ -140,7 +140,7 @@ body {
 }
 
 .search-input:focus {
-  border-color: #165DFF;
+  border-color: #4A90E2;
   box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
 }
 
@@ -151,7 +151,7 @@ body {
 }
 
 .dark .search-input:focus {
-  border-color: #165DFF;
+  border-color: #4A90E2;
 }
 
 .search-icon {
@@ -231,7 +231,7 @@ body {
 .loading-spinner {
   border: 2px solid rgba(22, 93, 255, 0.1);
   border-radius: 50%;
-  border-top: 2px solid #165DFF;
+  border-top: 2px solid #4A90E2;
   width: 20px;
   height: 20px;
   animation: spin 1s linear infinite;
@@ -298,7 +298,7 @@ body {
 }
 
 .search-input:focus {
-  border-color: #165DFF;
+  border-color: #4A90E2;
   box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
 }
 
@@ -309,7 +309,7 @@ body {
 }
 
 .dark .search-input:focus {
-  border-color: #165DFF;
+  border-color: #4A90E2;
 }
 
 .search-icon {

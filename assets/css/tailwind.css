@@ -1,3 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Tailwind v4 主题配置 - 与 CDN 配置保持一致 */
+@theme {
+  /* 自定义颜色 - 统一使用 #4A90E2 */
+  --color-primary: #4A90E2;
+  --color-secondary: #50E3C2;
+  --color-mihoyo: #4A90E2;
+  --color-minecraft: #5AC8FA;
+
+  /* 暗黑模式颜色 */
+  --color-dark: #1A1A2E;
+  --color-dark-card: #2d2d44;
+
+  /* 浅色模式颜色 */
+  --color-light: #F7F7F9;
+  --color-light-card: #FFFFFF;
+
+  /* 字体 */
+  --font-family-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+}

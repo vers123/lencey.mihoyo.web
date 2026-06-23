@@ -50,7 +50,7 @@ function createGameCard(game) {
         </svg>
       </button>
       <a href="${escapeHtml(game.link)}" target="_blank" rel="noopener noreferrer">
-        <img alt="${escapeHtml(game.name)}" class="w-full h-48 object-cover rounded-t-xl" loading="lazy" src="${escapeHtml(imgSrc)}" />
+        <img alt="${escapeHtml(game.name)}" class="w-full h-48 object-contain mb-4 rounded-lg" loading="lazy" src="${escapeHtml(imgSrc)}" style="background-color:rgb(0,0,0);" />
         <div class="p-4">
           <h3 class="text-xl font-bold text-primary mb-2">${escapeHtml(game.name)}</h3>
           <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">

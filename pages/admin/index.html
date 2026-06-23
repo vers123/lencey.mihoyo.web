@@ -81,10 +81,6 @@
                 <span class="lang-zh">账户管理</span>
                 <span class="lang-en hidden">Account Management</span>
             </a>
-            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-smooth">
-                <span class="lang-zh">系统设置</span>
-                <span class="lang-en hidden">System Settings</span>
-            </a>
         </nav>
 
         <!-- 右侧功能按钮 -->
@@ -119,6 +115,20 @@
         </div>
     </div>
 </header>
+
+<!-- 内容切换按钮 -->
+<div class="container mx-auto px-4 pt-4 max-w-6xl">
+    <div class="flex space-x-4 mb-4">
+        <button id="showUsersBtn" class="px-4 py-2 bg-primary text-white rounded-lg transition-smooth">
+            <span class="lang-zh">用户管理</span>
+            <span class="lang-en hidden">User Management</span>
+        </button>
+        <button id="showSettingsBtn" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg transition-smooth hover:bg-gray-300 dark:hover:bg-gray-600">
+            <span class="lang-zh">系统设置</span>
+            <span class="lang-en hidden">System Settings</span>
+        </button>
+    </div>
+</div>
 
 <!-- 主内容区 -->
 <main class="flex-1 container mx-auto px-4 py-8">
@@ -155,7 +165,7 @@
         </div>
 
         <!-- 用户管理卡片 -->
-        <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 mb-8 transition-smooth">
+        <div id="usersSection" class="bg-light-card dark:bg-dark-card rounded-xl shadow-md p-6 mb-8 transition-smooth">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
                     <span class="lang-zh">用户管理</span>
@@ -210,6 +220,13 @@
                         <!-- 用户数据将通过JavaScript动态添加 -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- 系统设置卡片 -->
+        <div id="settingsSection" class="hidden">
+            <div id="settingsContent">
+                <!-- 系统设置内容将通过JavaScript动态加载 -->
             </div>
         </div>
     </div>
@@ -282,6 +299,9 @@
 
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/auth/user.js"></script>
+<script src="../../config/games.config.js"></script>
+<script src="../../assets/js/game-render.js"></script>
+<script src="../../assets/js/admin/settings.js"></script>
 <script src="../../assets/js/admin/dashboard.js"></script>
 <script src="../../assets/js/common.js"></script>
 <script src="../../assets/js/page-init.js"></script>

@@ -1,27 +1,16 @@
 # Vers123 游戏导航网站
 
-<div style="text-align: center;">
-  <img src="assets/images/common/lencey.png" alt="Logo" style="width: 640px; height: 640px;">
-  <p style="text-align: center;">
-    简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
-    <br>
-    <a href="#项目概述"><strong>探索文档 »</strong></a>
-    <br><br>
-    <a href="https://vers123.github.io">在线预览</a>
-    ·
-    <a href="https://github.com/vers123/vers123.github.io/issues">提交问题</a>
-    ·
-    <a href="#开发计划">功能建议</a>
-  </p>
-</div>
+![Logo](assets/images/common/lencey.png)
+
+简洁轻量的游戏导航站，汇集米哈游及热门游戏官方链接
+
+[探索文档](#项目概述) · [在线预览](https://vers123.github.io) · [提交问题](https://github.com/vers123/vers123.github.io/issues) · [功能建议](#开发计划)
 
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 [![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-brightgreen)](https://vers123.github.io)
 [![Responsive Design](https://img.shields.io/badge/Design-Responsive-blue)](https://vers123.github.io)
-[![Bilingual](https://img.shields.io/badge/Language-ZH%2FEN-orange)](#语言选择)
-[![Last Update](https://img.shields.io/badge/Last%20Update-2026--05--16-yellowgreen)](https://github.com/vers123/vers123.github.io/commits/main)
-
----
+[![Bilingual](https://img.shields.io/badge/Language-ZH%2FEN-orange)](README.md)
+[![Last Update](https://img.shields.io/badge/Last%20Update-2026--06--24-yellowgreen)](https://github.com/vers123/vers123.github.io/commits/main)
 
 ## 目录
 
@@ -85,7 +74,7 @@
 
 ## 项目结构
 
-```
+```text
 vers123.github.io/
 ├── .github/                    # GitHub 工作流和设置
 │   └── workflows/
@@ -133,7 +122,6 @@ vers123.github.io/
 │   │   └── index.html          # 其他游戏导航
 │   └── 404.html                # 自定义 404 页面
 ├── .gitignore                  # Git 忽略规则
-├── tailwind.config.js          # Tailwind CSS 配置
 ├── index.html                  # 主首页
 └── README.md                   # 项目文档
 ```
@@ -148,11 +136,13 @@ vers123.github.io/
 ### 本地预览
 
 1. 克隆本仓库
+
    ```bash
    git clone https://github.com/vers123/vers123.github.io.git
    ```
 
 2. 进入项目目录
+
    ```bash
    cd vers123.github.io
    ```
@@ -163,8 +153,8 @@ vers123.github.io/
 
 ### 在线访问
 
-- 主域名：https://vers123.github.io
-- 备用域名：https://www.linglan.xin
+- 主域名：`https://vers123.github.io`
+- 备用域名：`https://www.linglan.xin`
 
 ## 使用指南
 
@@ -191,8 +181,8 @@ vers123.github.io/
 
 ### 米哈游游戏
 
-| 游戏名称（英文）          | 游戏名称（中文） | 状态    |
-|-------------------|----------|-------|
+| 游戏名称（英文）| 游戏名称（中文）| 状态 |
+| ----- | ----- | ----- | ----- |
 | Genshin Impact    | 原神       | ✅ 已上线 |
 | Honkai Impact 3rd | 崩坏 3     | ✅ 已上线 |
 | Honkai: Star Rail | 崩坏：星穹铁道  | ✅ 已上线 |
@@ -201,24 +191,24 @@ vers123.github.io/
 
 ### 其他游戏
 
-| 游戏名称（英文）                | 游戏名称（中文） | 状态     |
-|-------------------------|----------|--------|
-| Minecraft               | 我的世界     | ✅ 已上线  |
-| Counter-Strike 2        | CS2      | ✅ 已上线  |
-| The Legend of Zelda     | 塞尔达传说    | ✅ 已上线  |
-| League of Legends       | 英雄联盟     | ✅ 已上线  |
-| Fortnite                | 堡垒之夜     | ✅ 已上线  |
+| 游戏名称（英文） | 游戏名称（中文） | 状态 |
+| ----- | ----- | ----- |
+| Minecraft | 我的世界 | ✅ 已上线 |
+| Counter-Strike 2 | CS2 | ✅ 已上线 |
+| The Legend of Zelda | 塞尔达传说 | ✅ 已上线 |
+| League of Legends | 英雄联盟 | ✅ 已上线 |
+| Fortnite | 堡垒之夜 | ✅ 已上线 |
 
 ## 技术栈
 
-| 技术                 | 用途          |
-|--------------------|-------------|
-| HTML5              | 语义化页面结构     |
-| Tailwind CSS v3    | 工具类优先的样式框架  |
-| Vanilla JavaScript | 前端交互逻辑      |
-| 内联 SVG             | 图标系统（无外部依赖） |
-| LocalStorage       | 用户数据和偏好持久化  |
-| GitHub Pages       | 网站托管与部署     |
+| 技术 | 用途 |
+| ----- | ----- |
+| HTML5 | 语义化页面结构 |
+| Tailwind CSS v4 (CDN) | 工具类优先的样式框架（CDN 加载） |
+| Vanilla JavaScript | 前端交互逻辑 |
+| 内联 SVG | 图标系统（无外部依赖） |
+| LocalStorage | 用户数据和偏好持久化 |
+| GitHub Pages | 网站托管与部署 |
 
 ## 开发指南
 
@@ -243,9 +233,9 @@ vers123.github.io/
 
 ### 样式定制
 
-- **推荐方式**：直接在 HTML 中使用 Tailwind CSS 工具类
-- **全局修改**：修改 `tailwind.config.js` 进行主题调整
+- **推荐方式**：直接在 HTML 中使用 Tailwind CSS 工具类（通过 CDN 加载）
 - **自定义样式**：添加到 `assets/css/custom.css`（使用唯一类名作用域）
+- **主题配置**：`assets/css/tailwind.css` 中的 `@theme` 块定义了自定义主题变量
 - **暗黑模式**：确保样式有对应的 `.dark` 变体
 
 ### 性能优化检查清单
@@ -258,6 +248,16 @@ vers123.github.io/
 - [ ] 使用语义化 HTML 提升 SEO
 
 ## 更新日志
+
+### V3.0 (2026-06-24)
+
+- 🔄 升级 Tailwind CSS 从 v3 到 v4
+- ➕ 新增 `assets/css/tailwind.css` 使用 Tailwind v4 CSS 配置方式
+- 🧹 移除 `tailwind.config.js` 和 `postcss.config.js`（项目使用 CDN 方式）
+- 📦 简化 `package.json`，移除所有 tailwind 相关的 devDependencies
+- 🎨 统一项目配色，所有配置统一使用 `#4A90E2`
+- ➕ 新增管理员后台系统设置功能（站点信息、界面偏好、游戏分类、数据管理、系统信息）
+- �📝 更新 README.md 反映最新的技术栈和项目结构
 
 ### V2.9 (2026-05-16)
 
@@ -302,7 +302,7 @@ vers123.github.io/
 - 🧹 合并和简化页面头部的 CSS 块
 - 🛡️ 改进语言切换的健壮性和错误处理
 - 🎨 优化主题切换和收藏图标（内联 SVG）
-- 🌐 添加备用域名访问：vers123.github.io & www.linglan.xin
+- 🌐 添加备用域名访问：`vers123.github.io` & `www.linglan.xin`
 
 ### V2.4 (2025-12-23)
 
@@ -371,6 +371,6 @@ vers123.github.io/
 
 ## 联系方式与支持
 
-- 🐞 **问题反馈**：GitHub Issues
-- 💡 **功能建议**：GitHub Discussions
-- 📧 **电子邮件**：contact@linglan.xin（仅限重要事项）
+- 🐞 **问题反馈**：`GitHub Issues`
+- 💡 **功能建议**：`GitHub Discussions`
+- 📧 **电子邮件**：`3047493305@qq.com`（仅限重要事项）
