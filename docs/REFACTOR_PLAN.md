@@ -579,3 +579,155 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 - Google OAuth Client ID / Secret
 - JWT Secret
 - 管理员密码
+
+---
+
+## 十四、mihoyo-tool-kit 功能集成
+
+### 14.1 仓库功能概览
+
+[mihoyo-tool-kit](https://github.com/vers123/mihoyo-tool-kit) 是基于 Python + Playwright 的米游社数据抓取工具，核心功能：
+
+| 功能组 | 具体功能 | 数据量 | 是否需登录 |
+|--------|----------|--------|-----------|
+| 原神新闻（中文） | 抓取/增量/提取 原神官网新闻 | 4637 条 | 否 |
+| 原神新闻（英文） | 抓取 genshin.hoyoverse.com 新闻 | 2163 条 | 否 |
+| 绝区零新闻 | 抓取绝区零官网新闻 | 1554 条 | 否 |
+| 星穹铁道新闻 | 抓取星穹铁道官网新闻 | 792 条 | 否 |
+| 米游社用户动态 | 抓取用户发帖记录 | - | 是 |
+| 微博动态 | 抓取微博用户发帖 | - | 是 |
+| 角色图鉴 | 抓取米游社百科角色信息 | - | 否 |
+| 教程 | 抓取米游社教程页面 | - | 否 |
+| 数据导出 | Excel / RSS / JSON Feed | - | - |
+| 游戏字体 | Teyvat-Black / ZZZ-System / Star-Rail-Neue | - | - |
+
+### 14.2 集成架构
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    用户浏览器                         │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │  Vue 前端 │  │ Cookie   │  │ 免责声明/风险提示  │  │
+│  │ (新闻/图鉴)│  │(localStr)│  │   (Cookie输入前)   │  │
+│  └────┬─────┘  └────┬─────┘  └──────────────────┘  │
+└───────┼──────────────┼──────────────────────────────┘
+        │              │ Cookie(仅本地，用完即弃)
+        ▼              ▼
+┌─────────────────────────────────────────────────────┐
+│              Node.js + Express 后端                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │  API 路由 │  │ SQLite   │  │  定时任务调度     │  │
+│  └────┬─────┘  └──────────┘  └────────┬─────────┘  │
+└───────┼─────────────────────────────────┼────────────┘
+        │ HTTP 调用                        │ 触发抓取
+        ▼                                  ▼
+┌─────────────────────────────────────────────────────┐
+│           Python FastAPI 微服务 (同平台部署)          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │ Playwright│  │ SQLite   │  │ robots.txt 遵守   │  │
+│  │ 抓取引擎  │  │ (共享)   │  │ 频率限制          │  │
+│  └──────────┘  └──────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────┘
+```
+
+### 14.3 集成功能清单
+
+| 功能 | 实现方式 | 合规措施 |
+|------|----------|----------|
+| 游戏新闻 | Python 抓取 → SQLite → Node API → 前端聚合页+筛选 | 只展示标题+摘要+链接，标注来源版权，展示免责声明 |
+| 角色图鉴 | 抓取米游社百科 → 展示名称/立绘/属性/技能/命座 | 标注数据来源，展示版权声明 |
+| 米游社动态 | 用户输入 Cookie → Python 抓取 → 展示 | Cookie 仅存本地，输入前详细风险提示，用完即弃 |
+| 微博动态 | 用户输入 Cookie → Python 抓取 → 展示 | 同上 |
+| RSS 订阅 | Python 生成 RSS/JSON Feed → 提供订阅链接 | 遵循 feed 规范 |
+| 游戏字体 | 暂用国家标准字体，保留游戏字体资源供后续使用 | 展示 HoYo-Glyphs 非商业授权声明 |
+
+### 14.4 Python 微服务
+
+- **框架**：FastAPI（异步高性能，自动生成 API 文档）
+- **部署**：与 Node 后端同平台部署在 Render.com
+- **通信**：Node 后端通过内网 HTTP 调用 Python 服务 API
+- **数据库**：共享 SQLite 数据库
+
+### 14.5 数据更新策略
+
+- **管理员定时抓取**：后台定时任务自动更新新闻数据
+- **用户手动触发**：用户可点击"刷新"按钮手动触发抓取
+- **登录类数据**：用户提供 Cookie 后实时抓取，不持久化
+
+### 14.6 合规与安全措施
+
+#### 内容版权
+- 新闻只展示标题+摘要+链接，点击跳转原文
+- 所有抓取内容标注来源和版权归属
+- 页面展示免责声明
+- 排版尽量适合人类阅读，无法保障则不改变原文排版
+
+#### Cookie 安全
+- 用户输入 Cookie 前展示详细风险提示（作用、风险、使用范围）
+- Cookie 仅存储在用户浏览器 localStorage，不上传服务器
+- 抓取时临时传递给 Python 服务，用完即弃
+- 用户可随时清除本地 Cookie
+
+#### 抓取规范
+- 遵守目标网站 robots.txt
+- 控制抓取频率，不造成服务器压力
+- 增量抓取，避免重复请求
+
+#### 字体授权
+- 暂用国家标准规范字体
+- 保留游戏字体资源（Teyvat-Black / ZZZ-System / Star-Rail-Neue）供后续使用
+- 展示 HoYo-Glyphs 非商业授权声明
+
+### 14.7 数据库新增表
+
+```sql
+-- 新闻表
+CREATE TABLE news (
+  id TEXT PRIMARY KEY,
+  game TEXT,              -- genshin / zzz / starrail / genshin_en
+  title TEXT,
+  summary TEXT,
+  url TEXT,
+  source TEXT,            -- 来源
+  published_at TEXT,
+  crawled_at TEXT
+);
+
+-- 角色图鉴表
+CREATE TABLE characters (
+  id TEXT PRIMARY KEY,
+  game TEXT,
+  name TEXT,
+  image TEXT,             -- 立绘
+  element TEXT,           -- 属性/元素
+  skills TEXT,            -- 技能 (JSON)
+  constellations TEXT,    -- 命座 (JSON)
+  source TEXT,            -- 数据来源
+  crawled_at TEXT
+);
+
+-- 用户动态表（临时，不持久化Cookie）
+CREATE TABLE user_posts (
+  id TEXT PRIMARY KEY,
+  user_id TEXT,           -- 本站用户ID
+  platform TEXT,          -- miyoushe / weibo
+  content TEXT,
+  url TEXT,
+  posted_at TEXT,
+  crawled_at TEXT
+);
+```
+
+### 14.8 新增 API 接口
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | /api/news | 获取新闻列表（支持按游戏筛选） |
+| POST | /api/news/refresh | 手动触发新闻抓取（管理员） |
+| GET | /api/characters | 获取角色图鉴列表 |
+| GET | /api/characters/:id | 获取角色详情 |
+| POST | /api/characters/refresh | 手动触发图鉴抓取（管理员） |
+| POST | /api/user-posts/miyoushe | 抓取米游社动态（需 Cookie） |
+| POST | /api/user-posts/weibo | 抓取微博动态（需 Cookie） |
+| GET | /api/feed/rss | RSS 订阅源 |
+| GET | /api/feed/json | JSON Feed 订阅源 |
