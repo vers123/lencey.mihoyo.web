@@ -38,7 +38,7 @@
 | 安全性 | 密码 bcrypt 加密、JWT 认证、防 XSS/SQL 注入、rate limit |
 | 性能 | Lighthouse 90+，首屏加载 < 2s |
 | 架构 | 前后端分离，模块化，组件化 |
-| 功能 | 游戏管理后台、标签筛选、全局搜索、评论评分、PWA、资讯聚合 |
+| 功能 | 游戏管理后台、标签筛选、全局搜索、评论评分(1-10分)、PWA（资讯聚合暂缓） |
 | 工程化 | ESLint + Prettier、自动化测试、CI/CD |
 | SEO | sitemap、结构化数据、Open Graph |
 
@@ -207,7 +207,7 @@ vers123-game-nav/
 | user_id | TEXT (FK) | 用户 ID |
 | game_id | TEXT (FK) | 游戏 ID |
 | content | TEXT | 评论内容 |
-| rating | INTEGER | 评分（1-5） |
+| rating | INTEGER | 评分（1-10） |
 | created_at | TEXT | 创建时间 |
 
 ### 5.5 login_history 表
@@ -518,3 +518,64 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 | 阶段五 | 2-3 天 | PWA + SEO 优化 |
 | 阶段六 | 1-2 天 | 部署上线 |
 | **总计** | **约 15-21 天** | |
+
+---
+
+## 十三、最终确认决策清单
+
+以下为所有已确认的决策，作为实施依据：
+
+### 项目定位
+- 面向真实用户公开运营
+- 首要目标：安全性提升
+- 工作量：全面重构（约 15-21 天）
+
+### 技术栈
+- 前端：Vue 3 + Vite + Tailwind CLI + Vue Router + Pinia
+- 后端：Node.js + Express + SQLite (better-sqlite3)
+- 认证：bcrypt + JWT
+
+### 认证系统
+- 主登录：邮箱 + 密码（自建，无需第三方申请）
+- 密码找回：邮箱重置链接（Nodemailer + QQ邮箱 SMTP）
+- 邮箱验证：注册时需验证
+- 第三方登录：GitHub + Google（免费创建 OAuth App）
+- 会话有效期：7 天，支持"记住我"
+- 游客浏览：允许
+- 管理员账号：admin@linglan.xin（环境变量初始化）
+- 防刷：rate limit + 登录验证码
+
+### 部署
+- 平台：Render.com（单实例部署）
+- 域名：linglan.xin（直接访问）
+- SSL：免费 SSL（Let's Encrypt）
+- 部署方式：GitHub Actions 自动部署
+- 备份：每天自动备份 + 手动导出
+
+### 功能细节
+- 游戏数据初始：仅导入米哈游 6 款游戏
+- 游戏管理：管理员在线增删改
+- 标签筛选：支持
+- 全局搜索：支持跨分类
+- 评论：直接显示，事后审核删除
+- 评分：1-10 分制
+- PWA：缓存游戏数据，离线可浏览
+- 资讯聚合：暂缓实现
+- 主题色自定义：支持
+- UI：保持当前蓝白风格，细节优化
+- 深色模式 + 中英文：都保留
+- Logo：暂时占位，后续更换
+- 版权年份：2026
+
+### 工程质量
+- ESLint + Prettier
+- 单元测试（Vitest）+ E2E 测试（Playwright）
+- SEO：sitemap、结构化数据、Open Graph
+- 性能：Lighthouse 90+，首屏 < 2s
+
+### 需用户后续提供的密钥（环境变量）
+- QQ 邮箱地址及 SMTP 授权码
+- GitHub OAuth Client ID / Secret
+- Google OAuth Client ID / Secret
+- JWT Secret
+- 管理员密码
